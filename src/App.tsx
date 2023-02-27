@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.scss";
+import { SideNavBar } from "./layout";
 import { ErrorPage, HomePage, InvoicePage } from "./pages";
 
 function App() {
   return (
     <div className="App">
-      {/* Place SideNavBar here */}
+      <SideNavBar />
 
       <Routes>
         <Route path="/invoices/:id" element={<InvoicePage />} />
