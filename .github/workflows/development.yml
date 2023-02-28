@@ -23,6 +23,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -39,6 +41,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -60,6 +64,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version: 16
