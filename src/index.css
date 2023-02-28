@@ -4,3 +4,17 @@
   margin: 0;
   font-family: "League Spartan";
 }
+:root {
+  --color-purple: #7c5dfa;
+  --color-purple-light: #9277ff;
+  --color-gray-dark: #888eb0;
+  --color-gray-blue: #7e88c3;
+  --color-gray-light: #dfe3fa;
+  --color-gray-lightest: #f8f8fb;
+  --color-blue-darkest: #1e2139;
+  --color-blue-darker: #252945;
+  --color-black-darkest: #0c0e16;
+  --color-black-darker: #141625;
+  --color-red: #ec5757;
+  --color-red-light: #ff9797;
+}
