@@ -1,4 +1,4 @@
-<<<<<<<<< Temporary merge branch 1
+import addNewInvoiceCircle from "../assets/new-invoice-cicle.svg";
 import logo from "../assets/Logo.svg";
 import moon from "../assets/Moon.svg";
 import sol from "../assets/Sol.svg";
