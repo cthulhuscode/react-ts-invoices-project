@@ -1,3 +1,6 @@
+[![Production Pipeline](https://github.com/cthulhuscode/react-ts-invoices-project/actions/workflows/production.yml/badge.svg?branch=main)](https://github.com/cthulhuscode/react-ts-invoices-project/actions/workflows/production.yml)
+[![Development Pipeline](https://github.com/cthulhuscode/react-ts-invoices-project/actions/workflows/development.yml/badge.svg?branch=dev)](https://github.com/cthulhuscode/react-ts-invoices-project/actions/workflows/development.yml)
+
 # Invoices Project
 
 A web app to handle invoices from a user. Built using React (Typescript), Sass, React Router, Redux Toolkit.
