@@ -1,11 +1,14 @@
+import "./App.scss";
+import { SideNavBar } from "./layout";
+
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { ErrorPage, HomePage, InvoicePage } from "./pages";
-import "./App.scss";
 
 function App() {
   return (
     <div className="App">
-      {/* Place SideNavBar here */}
+      <SideNavBar />
+
       <HashRouter>
         <Routes>
           <Route path="/invoices/:id" element={<InvoicePage />} />
