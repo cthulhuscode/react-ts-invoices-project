@@ -38,6 +38,9 @@
     align-items: center;
   }
   &__btnTheme {
+    border: none;
+    outline: none;
+    background-color: transparent;
     margin-bottom: 32px;
     cursor: pointer;
   }
