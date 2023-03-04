@@ -116,12 +116,14 @@
 }
 
 .App.dark {
-  background-color: colors.$black-darker;
+  .home {
+    background-color: colors.$black-darker;
 
-  .header {
-    &__title,
-    &__filter {
-      color: #fff;
+    .header {
+      &__title,
+      &__filter {
+        color: #fff;
+      }
     }
   }
 }
