@@ -38,10 +38,15 @@
     align-items: center;
   }
   &__btnTheme {
-    width: 20px;
-    height: 20px;
+    border: none;
+    outline: none;
+    background-color: transparent;
     margin-bottom: 32px;
     cursor: pointer;
+  }
+  &__btnThemeImg {
+    width: 20px;
+    height: 20px;
   }
   &__contentUser {
     display: flex;

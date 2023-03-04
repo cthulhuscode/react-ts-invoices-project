@@ -1,7 +1,14 @@
+@use "./styles/_colors.scss" as colors;
+
 .App {
   display: flex;
+  height: 100vh;
 
   @media screen and (max-width: 900px) {
     flex-direction: column;
   }
+}
+
+.App.dark {
+  background-color: colors.$black-darker;
 }

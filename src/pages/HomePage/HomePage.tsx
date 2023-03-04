@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 import { InvoicesList } from "../../components";
 import { images } from "../../constants";
+import { StatusFilter } from "../../ui";
 import "./HomePage.scss";
 
 export const HomePage = () => {
@@ -33,14 +34,14 @@ export const HomePage = () => {
         </div>
 
         <div className="header__controls">
-          <div className="header__filter">
-            {windowWidth < 570 ? `Filter` : `Filter by status`}
-          </div>
+          <StatusFilter windowWidth={windowWidth} />
+
           <motion.button className="header__btn" whileTap={{ scale: 0.95 }}>
-            <img
+            <motion.img
               className="header-btn__circle"
               src={images.addNewInvoiceCircle}
               alt="Add new invoice"
+              whileTap={{ rotate: 90 }}
             />
             <span className="header-btn__text">
               {windowWidth < 570 ? `New` : `New invoice`}

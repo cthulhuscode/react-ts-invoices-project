@@ -1,3 +1,5 @@
+@use "./../../styles/_colors.scss" as colors;
+
 .home {
   flex: 1;
   display: flex;
@@ -32,7 +34,7 @@
       font-size: 32px;
       line-height: 36px;
       letter-spacing: -1px;
-      color: var(--color-black-darkest);
+      color: colors.$black-darkest;
 
       @media screen and (max-width: 570px) {
         font-weight: 700;
@@ -43,7 +45,7 @@
     }
 
     &__subtitle {
-      color: var(--color-gray-dark);
+      color: colors.$gray-dark;
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
@@ -66,7 +68,7 @@
       height: 48px;
 
       cursor: pointer;
-      background-color: var(--color-purple);
+      background-color: colors.$purple;
       border-radius: 24px;
       border: none;
       outline: none;
@@ -77,7 +79,7 @@
       gap: 16px;
 
       &:hover {
-        background-color: var(--color-purple-light);
+        background-color: colors.$purple-light;
       }
 
       @media screen and (max-width: 570px) {
@@ -110,5 +112,18 @@
 
   @media screen and (max-width: 570px) {
     padding: 0 24px;
+  }
+}
+
+.App.dark {
+  .home {
+    background-color: colors.$black-darker;
+
+    .header {
+      &__title,
+      &__filter {
+        color: #fff;
+      }
+    }
   }
 }

@@ -1,12 +1,14 @@
-import "./App.scss";
-import { SideNavBar } from "./layout";
-
 import { HashRouter, Route, Routes } from "react-router-dom";
+import { useAppSelector } from "./hooks/redux";
 import { ErrorPage, HomePage, InvoicePage } from "./pages";
+import { SideNavBar } from "./layout";
+import "./App.scss";
 
 function App() {
+  const theme = useAppSelector((state) => state.theme.value);
+
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <SideNavBar />
 
       <HashRouter>
