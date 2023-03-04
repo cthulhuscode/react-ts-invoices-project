@@ -1,0 +1,141 @@
+@use "./../../styles/_colors.scss" as colors;
+
+.sfilter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  &__trigger {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__text {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: colors.$black-darkest;
+    cursor: pointer;
+  }
+
+  &__img {
+    cursor: pointer;
+  }
+
+  &__options {
+    position: absolute;
+    bottom: -150px;
+    width: 192px;
+    height: 128px;
+    display: none;
+
+    background-color: #fff;
+    box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+    border-radius: 8px;
+    padding: 24px;
+  }
+
+  &__options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    list-style: none;
+
+    .options-list {
+      &__item {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+
+        cursor: pointer;
+
+        &-control {
+          /* Add if not using autoprefixer */
+          -webkit-appearance: none;
+          appearance: none;
+          /* For iOS < 15 to remove gradient background */
+          /* Not removed via appearance */
+          margin: 0;
+          background-color: colors.$gray-light;
+
+          border: 1px solid transparent;
+          transition: border-color 0.8s;
+          font: inherit;
+          color: colors.$purple;
+          border-radius: 2px;
+          transform: translateY(-1.25px);
+          cursor: pointer;
+
+          width: 16px;
+          height: 16px;
+
+          display: grid;
+          place-content: center;
+
+          @keyframes fadeIn {
+            0% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+
+          &:hover {
+            border-color: colors.$purple;
+          }
+
+          &::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em #fff;
+
+            transform-origin: bottom left;
+            clip-path: polygon(
+              14% 44%,
+              0 65%,
+              50% 100%,
+              100% 16%,
+              80% 0%,
+              43% 62%
+            );
+          }
+
+          &:focus {
+            outline: 1px solid rgb(124, 93, 250, 0.6);
+            outline-offset: 0.1px;
+          }
+
+          &:checked {
+            background-color: colors.$purple;
+          }
+
+          &:checked::before {
+            transform: scale(1);
+            animation: fadeIn 0.8s;
+          }
+        }
+
+        &-text {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 15px;
+          letter-spacing: -0.25px;
+          color: colors.$blue-darkest;
+          vertical-align: middle;
+
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
