@@ -4,6 +4,7 @@ import moon from "../assets/Moon.svg";
 import sol from "../assets/Sol.svg";
 import usuario from "../assets/Usuario.png";
 import filterArrow from "../assets/filterArrow.svg";
+import flecha from "../assets/flecha.svg";
 
 export const images = {
   logo,
@@ -12,4 +13,5 @@ export const images = {
   usuario,
   addNewInvoiceCircle,
   filterArrow,
+  flecha,
 };
