@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { images } from "../../constants";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import "./StatusFilter.scss";
 
 interface StatusFilterProps {
@@ -8,14 +9,19 @@ interface StatusFilterProps {
 }
 
 export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
+  const ref = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
 
   const handleShowOptionsClick = () => {
     setShowOptions((prevState) => !prevState);
   };
 
+  useOnClickOutside(ref, () => {
+    setShowOptions(false);
+  });
+
   return (
-    <div className="sfilter">
+    <div className="sfilter" ref={ref}>
       <div className="sfilter__trigger">
         <h3 className="sfilter__text" onClick={handleShowOptionsClick}>
           {windowWidth < 570 ? `Filter` : `Filter by status`}
