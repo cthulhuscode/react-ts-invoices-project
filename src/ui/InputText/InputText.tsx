@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import "./InputText.scss";
 
-interface InputNumberProps {
+interface InputTextProps {
   variant: string;
   children: any;
   classes: string;
 }
 
-export const InputText = ({ variant, children, classes }: InputNumberProps) => {
+export const InputText = ({ variant, children, classes }: InputTextProps) => {
   return (
     <motion.input
       className={`inputT${classes} inputT__${variant}`}
