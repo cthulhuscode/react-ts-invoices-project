@@ -7,7 +7,7 @@ interface InputNumberProps {
   classes: string;
 }
 
-export const Button = ({ variant, children, classes }: InputNumberProps) => {
+export const InputText = ({ variant, children, classes }: InputNumberProps) => {
   return (
     <motion.input
       className={`inputT${classes} inputT__${variant}`}

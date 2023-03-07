@@ -5,21 +5,21 @@ import { InvoicesListItem } from "../InvoicesListItem/InvoicesListItem";
 export const InvoicesList = () => {
   const lista = [
     {
-      id: "rt3080",
+      id: "rt3081",
       date: "Due 19 Aug 2021",
       name: "Jensen Huang",
       price: "1,800.9",
       class: "Paid",
     },
     {
-      id: "rt3080",
+      id: "rt3082",
       date: "Due 19 Aug 2021",
       name: "Jensen Huang",
       price: "100.9",
       class: "Pending",
     },
     {
-      id: "rt3080",
+      id: "rt3083",
       date: "Due 19 Aug 2021",
       name: "Jensen Huang",
       price: "3,900.00",
