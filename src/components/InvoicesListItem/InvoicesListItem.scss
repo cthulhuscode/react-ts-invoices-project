@@ -15,6 +15,28 @@
     gap: 43px;
   }
 
+  &__content2 {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    gap: 20px;
+    grid-template-columns: 2fr 2fr 1fr;
+  }
+  &__content2 > :nth-child(1) {
+    justify-self: start;
+  }
+
+  // .SideNavBar__content2 {
+  //   display: grid;
+  //   align-items: center;
+  //   justify-items: center;
+  //   gap: 20px;
+  //   grid-template-columns: 2fr 2fr 1fr;
+  // }
+
+  // .SideNavBar__content2 > :first-child {
+  //
+  // }
   &__id {
     font-weight: 700;
     font-size: 12px;
