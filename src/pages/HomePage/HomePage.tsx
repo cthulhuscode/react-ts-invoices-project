@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import { InvoicesList } from "../../components";
+import { InvoiceForm, InvoicesList } from "../../components";
 import { images } from "../../constants";
 import { StatusFilter } from "../../ui";
 import "./HomePage.scss";
@@ -51,6 +51,8 @@ export const HomePage = () => {
       </div>
 
       <InvoicesList />
+
+      <InvoiceForm />
     </div>
   );
 };
