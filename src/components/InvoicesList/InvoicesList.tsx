@@ -9,21 +9,21 @@ export const InvoicesList = () => {
       date: "Due 19 Aug 2021",
       name: "Jensen Huang",
       price: "1,800.9",
-      class: "Paid",
+      class: "paid",
     },
     {
       id: "rt3082",
       date: "Due 19 Aug 2021",
       name: "Jensen Huang",
       price: "100.9",
-      class: "Pending",
+      class: "pending",
     },
     {
       id: "rt3083",
       date: "Due 19 Aug 2021",
       name: "Jensen Huang",
       price: "3,900.00",
-      class: "Draft",
+      class: "draft",
     },
   ];
   return (
