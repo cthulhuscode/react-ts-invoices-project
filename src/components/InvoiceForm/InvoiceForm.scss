@@ -1,0 +1,34 @@
+.iform {
+  max-width: 616px;
+  width: 616px;
+  height: 100%;
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 2px solid red;
+  left: 0;
+
+  z-index: 1;
+
+  &::before {
+    content: "";
+    max-width: unset;
+    max-height: unset;
+    width: calc(100vw - 103px);
+    height: 100%;
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    background-color: black;
+    opacity: 0.5;
+
+    z-index: -1;
+  }
+}
