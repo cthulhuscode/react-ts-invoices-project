@@ -116,6 +116,25 @@
   }
 }
 
+.home.blur {
+  &::after {
+    content: "";
+    width: calc(100vw - 104px);
+    height: 100%;
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    background: #000000;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
 .App.dark {
   .home {
     background-color: colors.$black-darker;

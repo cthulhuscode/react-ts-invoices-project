@@ -5,9 +5,15 @@ import { InvoiceForm, InvoicesList } from "../../components";
 import { images } from "../../constants";
 import { StatusFilter } from "../../ui";
 import "./HomePage.scss";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { toggleForm } from "../../store";
 
 export const HomePage = () => {
+  const dispatch = useAppDispatch();
+
   const [windowWidth, setWindowWith] = useState(window.innerWidth);
+
+  const showForm = useAppSelector((state) => state.invoices.showForm);
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -22,7 +28,7 @@ export const HomePage = () => {
   });
 
   return (
-    <div className="home">
+    <div className={`home ${showForm ? "blur" : ""}`}>
       <div className="home__header">
         <div className="header__texts">
           <h1 className="header__title">Invoices</h1>
@@ -36,7 +42,11 @@ export const HomePage = () => {
         <div className="header__controls">
           <StatusFilter windowWidth={windowWidth} />
 
-          <motion.button className="header__btn" whileTap={{ scale: 0.95 }}>
+          <motion.button
+            onClick={() => dispatch(toggleForm())}
+            className="header__btn"
+            whileTap={{ scale: 0.95 }}
+          >
             <motion.img
               className="header-btn__circle"
               src={images.addNewInvoiceCircle}
