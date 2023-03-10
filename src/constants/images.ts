@@ -5,6 +5,7 @@ import sol from "../assets/Sol.svg";
 import usuario from "../assets/Usuario.png";
 import filterArrow from "../assets/filterArrow.svg";
 import flecha from "../assets/flecha.svg";
+import remove from "../assets/delete.svg";
 
 export const images = {
   logo,
@@ -14,4 +15,5 @@ export const images = {
   addNewInvoiceCircle,
   filterArrow,
   flecha,
+  remove,
 };
