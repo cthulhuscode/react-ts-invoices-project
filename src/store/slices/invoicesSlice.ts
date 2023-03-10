@@ -49,7 +49,7 @@ export const invoicesSlice = createSlice({
         );
       }
     },
-    toggleForm: (state, action: PayloadAction<boolean> | undefined) => {
+    toggleForm: (state, action: PayloadAction<boolean | undefined>) => {
       if (action?.payload !== undefined) {
         state.showForm = action.payload;
       } else {
