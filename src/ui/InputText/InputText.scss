@@ -2,7 +2,7 @@
 
 .inputT {
   max-width: 504px;
-  width: 504px;
+  width: 100%;
   height: 48px;
 
   &__texts {
@@ -92,5 +92,11 @@
 
   .inputT__label {
     color: colors.$red;
+  }
+}
+
+.no-label {
+  .inputT__label {
+    display: none;
   }
 }
