@@ -1,9 +1,16 @@
 import "./SideNavBar.scss";
+import React, { useState } from "react";
 import { images } from "../../constants/images";
 import { useAppDispatch } from "../../hooks/redux";
 import { toggleTheme } from "../../store";
 
 export const SideNavBar = () => {
+  const [isLightTheme, setIsLightTheme] = useState(true);
+
+  const cambioImg = () => {
+    setIsLightTheme(!isLightTheme);
+  };
+
   const dispatch = useAppDispatch();
 
   const handleThemeChange = () => {
@@ -21,8 +28,9 @@ export const SideNavBar = () => {
         <button className="SideNavBar__btnTheme" onClick={handleThemeChange}>
           <img
             className="SideNavBar__btnThemeImg"
-            src={images.moon}
+            src={isLightTheme ? images.moon : images.sol}
             alt="theme"
+            onClick={cambioImg}
           />
         </button>
         <div className="SideNavBar__contentUser">

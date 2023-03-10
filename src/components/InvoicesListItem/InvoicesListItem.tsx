@@ -21,13 +21,16 @@ export const InvoicesListItem = (props: InvoicesListItemProps) => {
         <p className="InvoicesListItem__date">{props.date}</p>
         <p className="InvoicesListItem__name">{props.name}</p>
       </div>
-      <div className="InvoicesListItem__content">
+      <div className="InvoicesListItem__content2">
         <h3 className="InvoicesListItem__price">&#163; {props.price}</h3>
-        <button
+        <div
           className={`InvoicesListItem__button InvoicesListItem__button--${props.class}`}
         >
-          {props.class}
-        </button>
+          <div
+            className={`InvoicesListItem__circle InvoicesListItem__circle--${props.class}`}
+          ></div>
+          <span>{props.class}</span>
+        </div>
         <img
           className="InvoicesListItem__arrow"
           src={images.flecha}
