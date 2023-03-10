@@ -1,9 +1,28 @@
+import { useRef } from "react";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { toggleForm } from "../../store";
 import { InputText } from "../../ui";
+
 import "./InvoiceForm.scss";
 
 export const InvoiceForm = () => {
+  const ref = useRef(null);
+  const dispatch = useAppDispatch();
+
+  const showForm = useAppSelector((state) => state.invoices.showForm);
+
+  useOnClickOutside(ref, () => {
+    dispatch(toggleForm(false));
+  });
+
   return (
-    <div className="iform">
+    <div
+      className="iform"
+      style={{ display: `${showForm ? "flex" : "none"}` }}
+      ref={ref}
+    >
       <h3>Bill From</h3>
       <InputText
         classes=""
