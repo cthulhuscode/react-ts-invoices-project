@@ -10,6 +10,7 @@ interface InvoicesState {
   selectedStatuses: {
     [key in Statuses]: boolean;
   };
+  showForm: boolean;
 }
 
 // Define the initial state using that type
@@ -20,6 +21,7 @@ const initialState: InvoicesState = {
     Pending: false,
     Draft: false,
   },
+  showForm: false,
 };
 
 export const invoicesSlice = createSlice({
@@ -47,10 +49,18 @@ export const invoicesSlice = createSlice({
         );
       }
     },
+    toggleForm: (state, action: PayloadAction<boolean | undefined>) => {
+      if (action?.payload !== undefined) {
+        state.showForm = action.payload;
+      } else {
+        state.showForm = !state.showForm;
+      }
+    },
   },
 });
 
-export const { addInvoice, editInvoice, deleteInvoice } = invoicesSlice.actions;
+export const { addInvoice, editInvoice, deleteInvoice, toggleForm } =
+  invoicesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const getInvoices = (state: RootState) => state.invoices.list;
