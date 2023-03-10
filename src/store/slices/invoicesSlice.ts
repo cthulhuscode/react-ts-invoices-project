@@ -49,8 +49,12 @@ export const invoicesSlice = createSlice({
         );
       }
     },
-    toggleForm: (state) => {
-      state.showForm = !state.showForm;
+    toggleForm: (state, action: PayloadAction<boolean> | undefined) => {
+      if (action?.payload !== undefined) {
+        state.showForm = action.payload;
+      } else {
+        state.showForm = !state.showForm;
+      }
     },
   },
 });
