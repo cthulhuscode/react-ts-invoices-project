@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -9,6 +9,22 @@ import "./InvoiceForm.scss";
 import { ItemList } from "./ItemList/ItemList";
 
 export const InvoiceForm = () => {
+  const [fromStreet, setFromStreet] = useState("");
+  const [fromCity, setFromCity] = useState("");
+  const [fromPostCode, setFromPostCode] = useState("");
+  const [fromCountry, setFromCountry] = useState("");
+
+  const [clientName, setClientName] = useState("");
+  const [clientEmail, setClientEmail] = useState("");
+  const [date, setDate] = useState("");
+  const [paymentTerms, setPaymentTerms] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+
+  const [toStreet, setToStreet] = useState("");
+  const [toCity, setToCity] = useState("");
+  const [toPostCode, setToPostCode] = useState("");
+  const [toCountry, setToCountry] = useState("");
+
   const ref = useRef(null);
   const dispatch = useAppDispatch();
 
@@ -30,9 +46,8 @@ export const InvoiceForm = () => {
           label="Street Address"
           name="fromStreet"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setFromStreet}
+          value={fromStreet}
         />
 
         <div className="iform__address-row iform__address-row--padding">
@@ -41,9 +56,8 @@ export const InvoiceForm = () => {
             label="City"
             name="fromCity"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setFromCity}
+            value={fromCity}
           />
 
           <InputText
@@ -51,9 +65,8 @@ export const InvoiceForm = () => {
             label="Post Code"
             name="fromPostCode"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setFromPostCode}
+            value={fromPostCode}
           />
 
           <InputText
@@ -61,9 +74,8 @@ export const InvoiceForm = () => {
             label="Country"
             name="fromCountry"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setFromCountry}
+            value={fromCountry}
           />
         </div>
 
@@ -74,9 +86,8 @@ export const InvoiceForm = () => {
           label="Client's Name"
           name="clientName"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setClientName}
+          value={clientName}
         />
 
         <InputText
@@ -84,9 +95,8 @@ export const InvoiceForm = () => {
           label="Client's Email"
           name="clientEmail"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setClientEmail}
+          value={clientEmail}
         />
 
         <InputText
@@ -94,40 +104,36 @@ export const InvoiceForm = () => {
           label="Street Address"
           name="toStreet"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setToStreet}
+          value={toStreet}
         />
 
         <div className="iform__address-row iform__address-row--padding">
           <InputText
             classes=""
             label="City"
-            name="fromCity"
+            name="toCity"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setToCity}
+            value={toCity}
           />
 
           <InputText
             classes=""
             label="Post Code"
-            name="fromPostCode"
+            name="toPostCode"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setToPostCode}
+            value={toPostCode}
           />
 
           <InputText
             classes=""
             label="Country"
-            name="fromCountry"
+            name="toCountry"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setToCountry}
+            value={toCountry}
           />
         </div>
 
@@ -137,9 +143,8 @@ export const InvoiceForm = () => {
             label="Invoice Date"
             name="date"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setDate}
+            value={date}
           />
 
           <InputText
@@ -147,9 +152,8 @@ export const InvoiceForm = () => {
             label="Payment Terms"
             name="paymentTerms"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setPaymentTerms}
+            value={paymentTerms}
           />
         </div>
 
@@ -158,9 +162,8 @@ export const InvoiceForm = () => {
           label="Project Description"
           name="projectDescription"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setProjectDescription}
+          value={projectDescription}
         />
 
         {/* Item List */}
