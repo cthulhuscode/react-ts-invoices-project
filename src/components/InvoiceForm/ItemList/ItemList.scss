@@ -1,0 +1,100 @@
+@use "./../../../styles/_colors.scss" as colors;
+
+.ilist {
+  width: 100%;
+
+  &__title {
+    margin-top: 48px;
+    align-self: flex-start;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 32px;
+    letter-spacing: -0.375px;
+    color: #777f98;
+  }
+
+  &__table {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+    width: 100%;
+  }
+
+  &__btn {
+    margin-top: 18px;
+    width: 100%;
+    border-radius: 24px;
+    background: #f9fafe;
+    height: 48px;
+    border: none;
+    cursor: pointer;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    letter-spacing: -0.25px;
+    color: colors.$gray-blue;
+
+    &:hover {
+      background-color: colors.$gray-light;
+    }
+  }
+}
+
+.table {
+  &__columns {
+    height: 15px;
+
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 214px 46px 100px 56px 15px;
+    grid-auto-rows: 48px;
+    gap: 16px;
+  }
+
+  &__column-text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: colors.$gray-blue;
+  }
+}
+
+/* Reset input number styles */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}
+
+.App.dark {
+  .ilist {
+    .table {
+      &__column-text {
+        color: colors.$gray-light;
+      }
+    }
+
+    &__btn {
+      background-color: colors.$blue-darker;
+
+      &:hover {
+        background-color: colors.$blue-darkest;
+      }
+    }
+  }
+}

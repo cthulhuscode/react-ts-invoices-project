@@ -1,23 +1,22 @@
-.btn{
-    cursor: pointer;
-    width: 89px;
-    height: 48px;
-    border-radius: 24px;
-    border: none;
-    @media screen and (max-width: 420px){
-        height: 32px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 20px;
-      }
+.btn {
+  cursor: pointer;
+  width: 89px;
+  height: 48px;
+  border-radius: 24px;
+  border: none;
+  @media screen and (max-width: 420px) {
+    height: 32px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+  }
 }
 
-.btn__darkmode{
-    background-color: #EC5757;
-    
+.btn__darkmode {
+  background-color: #ec5757;
 }
 
-.btn__lighmode{
-    background-color: #FF9797;
+.btn__lighmode {
+  background-color: #ff9797;
 }

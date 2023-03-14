@@ -1,15 +1,30 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-import { images } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { toggleForm } from "../../store";
 import { InputText } from "../../ui";
-
 import "./InvoiceForm.scss";
+import { ItemList } from "./ItemList/ItemList";
 
 export const InvoiceForm = () => {
+  const [fromStreet, setFromStreet] = useState("");
+  const [fromCity, setFromCity] = useState("");
+  const [fromPostCode, setFromPostCode] = useState("");
+  const [fromCountry, setFromCountry] = useState("");
+
+  const [clientName, setClientName] = useState("");
+  const [clientEmail, setClientEmail] = useState("");
+  const [date, setDate] = useState("");
+  const [paymentTerms, setPaymentTerms] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+
+  const [toStreet, setToStreet] = useState("");
+  const [toCity, setToCity] = useState("");
+  const [toPostCode, setToPostCode] = useState("");
+  const [toCountry, setToCountry] = useState("");
+
   const ref = useRef(null);
   const dispatch = useAppDispatch();
 
@@ -31,20 +46,18 @@ export const InvoiceForm = () => {
           label="Street Address"
           name="fromStreet"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setFromStreet}
+          value={fromStreet}
         />
 
-        <div className="iform__address-row vertical-margin">
+        <div className="iform__address-row iform__address-row--padding">
           <InputText
             classes=""
             label="City"
             name="fromCity"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setFromCity}
+            value={fromCity}
           />
 
           <InputText
@@ -52,9 +65,8 @@ export const InvoiceForm = () => {
             label="Post Code"
             name="fromPostCode"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setFromPostCode}
+            value={fromPostCode}
           />
 
           <InputText
@@ -62,9 +74,8 @@ export const InvoiceForm = () => {
             label="Country"
             name="fromCountry"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setFromCountry}
+            value={fromCountry}
           />
         </div>
 
@@ -75,72 +86,65 @@ export const InvoiceForm = () => {
           label="Client's Name"
           name="clientName"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setClientName}
+          value={clientName}
         />
 
         <InputText
-          classes="vertical-margin"
+          classes="mt-24"
           label="Client's Email"
           name="clientEmail"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setClientEmail}
+          value={clientEmail}
         />
 
         <InputText
-          classes="vertical-margin"
+          classes="mt-24"
           label="Street Address"
           name="toStreet"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setToStreet}
+          value={toStreet}
         />
 
-        <div className="iform__address-row iform__address-row--margin vertical-margin">
+        <div className="iform__address-row iform__address-row--padding">
           <InputText
             classes=""
             label="City"
-            name="fromCity"
+            name="toCity"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setToCity}
+            value={toCity}
           />
 
           <InputText
             classes=""
             label="Post Code"
-            name="fromPostCode"
+            name="toPostCode"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setToPostCode}
+            value={toPostCode}
           />
 
           <InputText
             classes=""
             label="Country"
-            name="fromCountry"
+            name="toCountry"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setToCountry}
+            value={toCountry}
           />
         </div>
 
-        <div className="iform__address-row iform__address-row--padding">
+        <div className="iform__address-row mt-48">
           <InputText
             classes=""
             label="Invoice Date"
             name="date"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setDate}
+            value={date}
           />
 
           <InputText
@@ -148,98 +152,44 @@ export const InvoiceForm = () => {
             label="Payment Terms"
             name="paymentTerms"
             error={false}
-            setState={() => {
-              return 0;
-            }}
+            setState={setPaymentTerms}
+            value={paymentTerms}
           />
         </div>
 
         <InputText
-          classes="vertical-margin"
+          classes="mt-24"
           label="Project Description"
           name="projectDescription"
           error={false}
-          setState={() => {
-            return 0;
-          }}
+          setState={setProjectDescription}
+          value={projectDescription}
         />
 
         {/* Item List */}
-        <h2 className="iform__table-title">Item List</h2>
-        <div className="iform__table">
-          <div className="table__row table__columns">
-            <span className="table__column-text">Item Name</span>
-            <span className="table__column-text">Qty.</span>
-            <span className="table__column-text">Price</span>
-            <span className="table__column-text">Total</span>
-          </div>
-          <div className="table__row">
-            <input
-              className="table__cell table__input"
-              type="text"
-              name="itemName"
-              id="itemName"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemQty"
-              id="itemQty"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemPrice"
-              id="itemPrice"
-            />
-            <span className="table__cell">$156.00</span>
+        <ItemList />
 
-            <div className="table__cell">
-              <motion.img
-                className="table__remove"
-                src={images.remove}
-                alt="remove item"
-                whileTap={{ scale: 0.95 }}
-              />
-            </div>
-          </div>
-          <div className="table__row">
-            <input
-              className="table__cell table__input"
-              type="text"
-              name="itemName"
-              id="itemName"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemQty"
-              id="itemQty"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemPrice"
-              id="itemPrice"
-            />
-            <span className="table__cell">$156.00</span>
-
-            <div className="table__cell">
-              <motion.img
-                className="table__remove"
-                src={images.remove}
-                alt="remove item"
-                whileTap={{ scale: 0.95 }}
-              />
-            </div>
-          </div>
-
+        <div className="iform__btns">
           <motion.button
-            className="iform__table-btn"
+            className="iform-btn iform-btn__discard"
             whileTap={{ scale: 0.95 }}
           >
-            + Add New Item
+            Discard
           </motion.button>
+          <div className="iform__btns-save">
+            <motion.button
+              className="iform-btn iform-btn__draft"
+              whileTap={{ scale: 0.95 }}
+            >
+              Save as Draft
+            </motion.button>
+            <motion.button
+              className="iform-btn iform-btn__save"
+              whileTap={{ scale: 0.95 }}
+            >
+              Save & Send
+            </motion.button>
+          </div>
         </div>
       </div>
 
