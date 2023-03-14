@@ -1,13 +1,12 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 
-import { images } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { toggleForm } from "../../store";
 import { InputText } from "../../ui";
-
 import "./InvoiceForm.scss";
+import { ItemList } from "./ItemList/ItemList";
 
 export const InvoiceForm = () => {
   const ref = useRef(null);
@@ -36,7 +35,7 @@ export const InvoiceForm = () => {
           }}
         />
 
-        <div className="iform__address-row vertical-margin">
+        <div className="iform__address-row iform__address-row--padding">
           <InputText
             classes=""
             label="City"
@@ -81,7 +80,7 @@ export const InvoiceForm = () => {
         />
 
         <InputText
-          classes="vertical-margin"
+          classes="mt-24"
           label="Client's Email"
           name="clientEmail"
           error={false}
@@ -91,7 +90,7 @@ export const InvoiceForm = () => {
         />
 
         <InputText
-          classes="vertical-margin"
+          classes="mt-24"
           label="Street Address"
           name="toStreet"
           error={false}
@@ -100,7 +99,7 @@ export const InvoiceForm = () => {
           }}
         />
 
-        <div className="iform__address-row iform__address-row--margin vertical-margin">
+        <div className="iform__address-row iform__address-row--padding">
           <InputText
             classes=""
             label="City"
@@ -132,7 +131,7 @@ export const InvoiceForm = () => {
           />
         </div>
 
-        <div className="iform__address-row iform__address-row--padding">
+        <div className="iform__address-row mt-48">
           <InputText
             classes=""
             label="Invoice Date"
@@ -155,7 +154,7 @@ export const InvoiceForm = () => {
         </div>
 
         <InputText
-          classes="vertical-margin"
+          classes="mt-24"
           label="Project Description"
           name="projectDescription"
           error={false}
@@ -165,81 +164,29 @@ export const InvoiceForm = () => {
         />
 
         {/* Item List */}
-        <h2 className="iform__table-title">Item List</h2>
-        <div className="iform__table">
-          <div className="table__row table__columns">
-            <span className="table__column-text">Item Name</span>
-            <span className="table__column-text">Qty.</span>
-            <span className="table__column-text">Price</span>
-            <span className="table__column-text">Total</span>
-          </div>
-          <div className="table__row">
-            <input
-              className="table__cell table__input"
-              type="text"
-              name="itemName"
-              id="itemName"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemQty"
-              id="itemQty"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemPrice"
-              id="itemPrice"
-            />
-            <span className="table__cell">$156.00</span>
+        <ItemList />
 
-            <div className="table__cell">
-              <motion.img
-                className="table__remove"
-                src={images.remove}
-                alt="remove item"
-                whileTap={{ scale: 0.95 }}
-              />
-            </div>
-          </div>
-          <div className="table__row">
-            <input
-              className="table__cell table__input"
-              type="text"
-              name="itemName"
-              id="itemName"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemQty"
-              id="itemQty"
-            />
-            <input
-              className="table__cell table__input"
-              type="number"
-              name="itemPrice"
-              id="itemPrice"
-            />
-            <span className="table__cell">$156.00</span>
-
-            <div className="table__cell">
-              <motion.img
-                className="table__remove"
-                src={images.remove}
-                alt="remove item"
-                whileTap={{ scale: 0.95 }}
-              />
-            </div>
-          </div>
-
+        <div className="iform__btns">
           <motion.button
-            className="iform__table-btn"
+            className="iform-btn iform-btn__discard"
             whileTap={{ scale: 0.95 }}
           >
-            + Add New Item
+            Discard
           </motion.button>
+          <div className="iform__btns-save">
+            <motion.button
+              className="iform-btn iform-btn__draft"
+              whileTap={{ scale: 0.95 }}
+            >
+              Save as Draft
+            </motion.button>
+            <motion.button
+              className="iform-btn iform-btn__save"
+              whileTap={{ scale: 0.95 }}
+            >
+              Save & Send
+            </motion.button>
+          </div>
         </div>
       </div>
 

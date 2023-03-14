@@ -11,7 +11,6 @@
   top: 0;
   bottom: 0;
 
-  background-color: #fff;
   border-radius: 0px 20px 20px 0px;
 
   &-content {
@@ -19,12 +18,14 @@
     height: 100%;
     z-index: 1;
 
+    background-color: #fff;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background-color: #fff;
     padding: 56px;
+    padding-bottom: 32px;
     overflow-y: scroll;
   }
 
@@ -56,104 +57,60 @@
     gap: 24px;
 
     &--padding {
-      margin-top: 48px;
+      padding-top: 24px;
     }
   }
 
-  &__table-title {
-    margin-top: 48px;
-    align-self: flex-start;
+  &__btns {
+    margin-top: 39px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 
+    &-save {
+      display: flex;
+      gap: 8px;
+    }
+  }
+
+  .iform-btn {
+    width: 125px;
+    height: 48px;
+
+    border-radius: 24px;
+    border: none;
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
-    line-height: 32px;
-    letter-spacing: -0.375px;
-    color: #777f98;
-  }
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
 
-  &__table {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 16px;
-    width: 100%;
+    cursor: pointer;
 
-    &-btn {
-      width: 100%;
-      border-radius: 24px;
-      background: #f9fafe;
-      height: 48px;
-      border: none;
-      cursor: pointer;
-
-      font-style: normal;
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 15px;
-      text-align: center;
-      letter-spacing: -0.25px;
+    &__discard {
+      background-color: rgb(136, 142, 176, 0.1);
       color: colors.$gray-blue;
+      width: 96px;
+      &:hover {
+        background-color: rgb(126, 136, 195, 0.2);
+      }
+    }
+
+    &__draft {
+      background-color: #373b53;
+      color: colors.$gray-dark;
+      &:hover {
+        background-color: colors.$black-darkest;
+      }
+    }
+
+    &__save {
+      background-color: colors.$purple;
+      color: #fff;
 
       &:hover {
-        background-color: colors.$gray-light;
+        background-color: colors.$purple-light;
       }
-    }
-  }
-
-  .table {
-    &__row {
-      width: 100%;
-
-      display: grid;
-      grid-template-columns: 214px 46px 100px 56px 15px;
-      grid-auto-rows: 48px;
-      gap: 16px;
-    }
-
-    &__columns {
-      height: 15px;
-    }
-
-    &__cell {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    &__input {
-      border-radius: 4px;
-      border: 1px solid colors.$gray-light;
-
-      font-style: normal;
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 15px;
-      letter-spacing: -0.25px;
-      color: colors.$black-darkest;
-      padding-left: 10%;
-
-      &:hover,
-      &:focus {
-        border: 1px solid colors.$purple;
-        outline: 1px solid colors.$purple;
-      }
-    }
-
-    &__column-text {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 15px;
-      letter-spacing: -0.25px;
-      color: colors.$gray-blue;
-    }
-
-    &__remove {
-      width: 12.44px;
-      height: 16px;
-      cursor: pointer;
     }
   }
 
@@ -175,6 +132,42 @@
   }
 }
 
-.vertical-margin {
-  margin-top: 36px;
+.mt-48 {
+  margin-top: 48px;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+.App.dark {
+  .iform {
+    &-content {
+      background-color: colors.$black-darker;
+    }
+
+    &__title {
+      color: #fff;
+    }
+
+    &-btn {
+      &__discard {
+        background-color: #f9fafe;
+
+        &:hover {
+          background-color: colors.$gray-light;
+          color: colors.$blue-darkest;
+        }
+      }
+
+      &__draft:hover {
+        background-color: colors.$blue-darkest;
+        color: colors.$gray-light;
+      }
+
+      &__save:hover {
+        background-color: colors.$purple-light;
+      }
+    }
+  }
 }
