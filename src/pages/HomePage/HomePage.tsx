@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import { InvoicesList } from "../../components";
+import { InvoiceForm, InvoicesList } from "../../components";
 import { images } from "../../constants";
 import { StatusFilter } from "../../ui";
 import "./HomePage.scss";
+import { useAppDispatch } from "../../hooks/redux";
+import { toggleForm } from "../../store";
 
 export const HomePage = () => {
+  const dispatch = useAppDispatch();
+
   const [windowWidth, setWindowWith] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -36,7 +40,11 @@ export const HomePage = () => {
         <div className="header__controls">
           <StatusFilter windowWidth={windowWidth} />
 
-          <motion.button className="header__btn" whileTap={{ scale: 0.95 }}>
+          <motion.button
+            onClick={() => dispatch(toggleForm())}
+            className="header__btn"
+            whileTap={{ scale: 0.95 }}
+          >
             <motion.img
               className="header-btn__circle"
               src={images.addNewInvoiceCircle}
@@ -51,6 +59,8 @@ export const HomePage = () => {
       </div>
 
       <InvoicesList />
+
+      <InvoiceForm />
     </div>
   );
 };

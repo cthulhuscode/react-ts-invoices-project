@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
 import { images } from "../../constants";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import "./StatusFilter.scss";
 
 interface StatusFilterProps {
@@ -8,14 +10,30 @@ interface StatusFilterProps {
 }
 
 export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
+  const ref = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
+  const [filterOptions, setFilterOptions] = useState({
+    draft: false,
+    pending: false,
+    paid: true,
+  });
 
   const handleShowOptionsClick = () => {
     setShowOptions((prevState) => !prevState);
   };
 
+  const handleCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilterOptions({ ...filterOptions, [e.target.id]: e.target.checked });
+  };
+
+  useMemo(() => handleCheckboxClick, [filterOptions]);
+
+  useOnClickOutside(ref, () => {
+    setShowOptions(false);
+  });
+
   return (
-    <div className="sfilter">
+    <div className="sfilter" ref={ref}>
       <div className="sfilter__trigger">
         <h3 className="sfilter__text" onClick={handleShowOptionsClick}>
           {windowWidth < 570 ? `Filter` : `Filter by status`}
@@ -42,6 +60,7 @@ export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
               type="checkbox"
               name="draft"
               id="draft"
+              onChange={handleCheckboxClick}
             />
             <label className="options-list__item-text" htmlFor="draft">
               Draft
@@ -53,6 +72,7 @@ export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
               type="checkbox"
               name="pending"
               id="pending"
+              onChange={handleCheckboxClick}
             />
             <label className="options-list__item-text" htmlFor="pending">
               Pending
@@ -62,8 +82,10 @@ export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
             <input
               className="options-list__item-control"
               type="checkbox"
-              name="Paid"
-              id="Paid"
+              name="paid"
+              id="paid"
+              onChange={handleCheckboxClick}
+              checked={filterOptions.paid}
             />
             <label className="options-list__item-text" htmlFor="Paid">
               Paid

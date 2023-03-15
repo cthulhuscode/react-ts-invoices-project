@@ -1,0 +1,82 @@
+@use "./../../../../styles/_colors.scss" as colors;
+
+.fl-item {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 214px 46px 100px 56px 15px;
+  grid-auto-rows: 48px;
+  gap: 16px;
+
+  &__cell {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    border-radius: 4px;
+    border: 1px solid colors.$gray-light;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: colors.$black-darkest;
+    padding-left: 10%;
+
+    &:hover,
+    &:focus {
+      border: 1px solid colors.$purple;
+      outline: 1px solid colors.$purple;
+    }
+
+    &-qty {
+      padding: 0;
+      text-align: center;
+    }
+  }
+
+  &__total {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: colors.$gray-dark;
+  }
+
+  &__remove {
+    width: 12.44px;
+    height: 16px;
+    cursor: pointer;
+
+    &:hover {
+      filter: invert(66%) sepia(75%) saturate(4905%) hue-rotate(325deg)
+        brightness(92%) contrast(100%);
+    }
+  }
+}
+
+.App.dark {
+  .fl-item {
+    &__input {
+      background: colors.$blue-darkest;
+      border: 1px solid colors.$blue-darker;
+      border-radius: 4px;
+      color: white;
+
+      &:hover,
+      &:focus {
+        border: 1px solid colors.$purple;
+        outline: 1px solid colors.$purple;
+      }
+    }
+
+    &__total {
+      color: colors.$gray-light;
+    }
+  }
+}

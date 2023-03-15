@@ -1,0 +1,128 @@
+.InvoicesListItem {
+  display: flex;
+  align-items: center;
+  gap: 74px;
+  height: 72px;
+  width: 730px;
+  border-radius: 8px;
+  padding: 0px 32px;
+  box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+  background: white;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 43px;
+  }
+
+  &__content2 {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    gap: 20px;
+    grid-template-columns: 2fr 2fr 1fr;
+  }
+  &__content2 > :nth-child(1) {
+    justify-self: start;
+  }
+  &__id {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #7e88c3;
+    text-transform: uppercase;
+    color: #0c0e16;
+  }
+  &__id span {
+    color: #7e88c3;
+  }
+  &__date {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #888eb0;
+  }
+  &__name {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #858bb2;
+  }
+  &__price {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: right;
+    letter-spacing: -0.8px;
+    color: #0c0e16;
+  }
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 104px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    text-transform: capitalize;
+    border-radius: 6px;
+  }
+  &__circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  &__circle--paid {
+    background-color: #33d69f;
+  }
+  &__circle--pending {
+    background-color: #ff8f00;
+  }
+  &__circle--draft {
+    background-color: #373b53;
+  }
+  &__button--paid {
+    color: #33d69f;
+    background: rgba(51, 214, 159, 0.06);
+  }
+  &__button--pending {
+    color: #ff8f00;
+    background: rgba(255, 143, 0, 0.06);
+  }
+  &__button--draft {
+    color: #373b53;
+    background: rgba(55, 59, 83, 0.06);
+  }
+}
+.InvoicesListItem:hover {
+  cursor: pointer;
+  border: 1px solid #7c5dfa;
+}
+.App.dark {
+  .InvoicesListItem {
+    background: #1e2139;
+
+    &__id,
+    &__name,
+    &__price {
+      color: white;
+    }
+    &__date {
+      color: #dfe3fa;
+    }
+
+    &__button--draft {
+      color: #dfe3fa;
+      background: rgba(223, 227, 250, 0.06);
+    }
+    &__circle--draft {
+      background-color: #dfe3fa;
+    }
+  }
+}
