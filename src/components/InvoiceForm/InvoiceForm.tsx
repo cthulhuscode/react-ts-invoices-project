@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
-import { toggleForm } from "../../store";
+import { toggleForm } from "../../redux";
 
 // import type { Invoice } from "../../interfaces";
 import { Statuses } from "../../interfaces";
@@ -174,14 +174,21 @@ export const InvoiceForm = () => {
         </div>
 
         <div className="iform__address-row mt-48">
-          <InputText
-            setInputHasError={setFormHasErrors}
-            classes=""
-            label="Invoice Date"
-            name="date"
-            setState={setDate}
-            value={date}
-          />
+          <div className="iform__date">
+            <label className="iform__date-label" htmlFor="date">
+              Invoice Date
+            </label>
+            <input
+              className="iform__date-control"
+              type="date"
+              name="date"
+              id="date"
+              value={date}
+              onChange={(e) => {
+                setDate(e.target.value);
+              }}
+            />
+          </div>
 
           <InputText
             setInputHasError={setFormHasErrors}

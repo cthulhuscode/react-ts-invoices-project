@@ -2,7 +2,7 @@ import "./SideNavBar.scss";
 import React, { useState } from "react";
 import { images } from "../../constants/images";
 import { useAppDispatch } from "../../hooks/redux";
-import { toggleTheme } from "../../store";
+import { toggleTheme } from "../../redux";
 
 export const SideNavBar = () => {
   const [isLightTheme, setIsLightTheme] = useState(true);
