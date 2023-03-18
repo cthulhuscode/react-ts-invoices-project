@@ -1,0 +1,249 @@
+@use "./../../styles/_colors.scss" as colors;
+
+.datepicker {
+  position: relative;
+  max-width: 504px;
+  width: 100%;
+}
+.datepicker * {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently */
+}
+
+.dp {
+  &__label {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: colors.$gray-blue;
+  }
+
+  &__date {
+    margin-top: 4px;
+    width: 100%;
+    height: 48px;
+
+    background: #ffffff;
+    border: 1px solid #dfe3fa;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__date:hover,
+  &__date:focus {
+    border: 1px solid #7c5dfa;
+  }
+
+  &__date-text {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #0c0e16;
+  }
+
+  &__date-icon img {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__picker {
+    position: absolute;
+    left: 0;
+    top: 78px;
+
+    width: inherit;
+    height: 282px;
+
+    overflow: hidden;
+    padding: 20px;
+
+    background: #ffffff;
+    box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+    border-radius: 8px;
+  }
+}
+
+/*
+  PICKER
+*/
+
+.picker {
+  &__head {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+  }
+
+  &__arrow {
+    width: 25px;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  &__date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  &__date-text {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: -0.25px;
+    color: #0c0e16;
+  }
+
+  &__calendar {
+    width: 100%;
+
+    margin-top: 28px;
+    width: 100%;
+  }
+}
+
+/*
+  CALENDAR
+*/
+
+.calendar {
+  &__days {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: center;
+    justify-items: center;
+  }
+  &__day {
+    font-weight: 700;
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  &__numbers {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 15px;
+    row-gap: 16px;
+
+    height: 100%;
+    width: 100%;
+  }
+
+  &__cell {
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+  }
+
+  &__number {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 15px;
+    text-align: center;
+    letter-spacing: -0.25px;
+    color: #0c0e16;
+  }
+
+  &__number:hover {
+    color: #7c5dfa;
+  }
+
+  &__cell.disabled {
+    pointer-events: none;
+  }
+  &__cell.disabled &__number {
+    color: #ddd !important;
+  }
+  &__cell.highlight &__number {
+    color: #ec5757;
+  }
+  &__cell.highlight-purple &__number {
+    color: #7c5dfa;
+  }
+}
+
+.App.dark {
+  .dp {
+    &__label {
+      color: colors.$gray-light;
+    }
+
+    &__date {
+      background: colors.$blue-darkest;
+      border: 1px solid colors.$blue-darker;
+      border-radius: 4px;
+      color: white;
+
+      &:hover,
+      &:focus {
+        border: 1px solid colors.$purple;
+        outline: 1px solid colors.$purple;
+      }
+
+      &-text {
+        color: #fff;
+      }
+    }
+
+    &__picker {
+      background-color: colors.$blue-darker;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  .picker {
+    &__month,
+    &__year {
+      color: colors.$gray-light;
+    }
+  }
+
+  .calendar {
+    &__day,
+    &__number {
+      color: colors.$gray-light;
+    }
+    &__number:hover {
+      color: #7c5dfa;
+    }
+    &__cell.highlight {
+      .calendar__number {
+        color: #ec5757;
+      }
+    }
+    &__cell.highlight-purple {
+      .calendar__number {
+        color: #7c5dfa;
+      }
+    }
+    &__cell.disabled {
+      .calendar__number {
+        color: colors.$gray-light !important;
+        mix-blend-mode: normal;
+        opacity: 0.08;
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ import { toggleForm } from "../../redux";
 import { Statuses } from "../../interfaces";
 
 import { ItemList } from "./ItemList/ItemList";
-import { InputText } from "../../ui";
+import { DatePicker, InputText } from "../../ui";
 
 import "./InvoiceForm.scss";
 
@@ -21,7 +21,11 @@ export const InvoiceForm = () => {
 
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<{
+    timestamp: number;
+    dateString: string;
+    friendlyDate: string;
+  }>();
   const [paymentTerms, setPaymentTerms] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
 
@@ -174,7 +178,7 @@ export const InvoiceForm = () => {
         </div>
 
         <div className="iform__address-row mt-48">
-          <div className="iform__date">
+          {/* <div className="iform__date">
             <label className="iform__date-label" htmlFor="date">
               Invoice Date
             </label>
@@ -188,7 +192,9 @@ export const InvoiceForm = () => {
                 setDate(e.target.value);
               }}
             />
-          </div>
+          </div> */}
+
+          <DatePicker onChangeDate={setDate} label={"Issue Date"} classes="" />
 
           <InputText
             setInputHasError={setFormHasErrors}
