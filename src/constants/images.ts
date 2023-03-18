@@ -6,6 +6,9 @@ import usuario from "../assets/Usuario.png";
 import filterArrow from "../assets/filterArrow.svg";
 import flecha from "../assets/flecha.svg";
 import remove from "../assets/delete.svg";
+import leftArrow from "../assets/left-arrow.svg";
+import rightArrow from "../assets/right-arrow.svg";
+import calendar from "../assets/calendar.svg";
 
 export const images = {
   logo,
@@ -16,4 +19,7 @@ export const images = {
   filterArrow,
   flecha,
   remove,
+  leftArrow,
+  rightArrow,
+  calendar,
 };
