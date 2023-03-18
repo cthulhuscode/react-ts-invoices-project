@@ -19,6 +19,7 @@ export const ListItem = ({ item }: ListItemProps) => {
         type="text"
         name="itemName"
         id="itemName"
+        readOnly={true}
       />
       <input
         value={amount}
@@ -28,6 +29,7 @@ export const ListItem = ({ item }: ListItemProps) => {
         id="itemQty"
         min={1}
         placeholder="1"
+        readOnly={true}
       />
       <input
         value={price}
@@ -37,6 +39,7 @@ export const ListItem = ({ item }: ListItemProps) => {
         id="itemPrice"
         placeholder="0.00"
         min={1}
+        readOnly={true}
       />
       <span className="fl-item__cell fl-item__total">${total}</span>
 
