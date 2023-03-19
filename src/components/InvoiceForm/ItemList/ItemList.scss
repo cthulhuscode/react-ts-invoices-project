@@ -21,6 +21,19 @@
     gap: 12px;
     margin-top: 16px;
     width: 100%;
+
+    /* Only show the labels of first row */
+    & > .fl-item:first-child .fl-item__label {
+      display: unset;
+    }
+
+    /* Show the labels of each row */
+    @media screen and (max-width: 632px) {
+      & > .fl-item .fl-item__label {
+        display: unset;
+      }
+      gap: 48px;
+    }
   }
 
   &__btn {
@@ -43,28 +56,10 @@
     &:hover {
       background-color: colors.$gray-light;
     }
-  }
-}
 
-.table {
-  &__columns {
-    height: 15px;
-
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: 214px 46px 100px 56px 15px;
-    grid-auto-rows: 48px;
-    gap: 16px;
-  }
-
-  &__column-text {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    letter-spacing: -0.25px;
-    color: colors.$gray-blue;
+    @media screen and (max-width: 632px) {
+      margin-top: 48px;
+    }
   }
 }
 

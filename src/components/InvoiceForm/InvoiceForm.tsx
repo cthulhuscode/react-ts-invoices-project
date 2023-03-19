@@ -12,6 +12,7 @@ import { ItemList } from "./ItemList/ItemList";
 import { DatePicker, InputText } from "../../ui";
 
 import "./InvoiceForm.scss";
+import { images } from "../../constants";
 
 export const InvoiceForm = () => {
   const [fromStreet, setFromStreet] = useState("");
@@ -77,6 +78,11 @@ export const InvoiceForm = () => {
   return (
     <div className="iform" style={{ display: `${showForm ? "flex" : "none"}` }}>
       <div className="iform-content" ref={ref}>
+        <div className="iform__back">
+          <img src={images.leftArrow} alt="go back" />
+          <span>Go back</span>
+        </div>
+
         <h1 className="iform__title">New Invoice</h1>
 
         {/* Bill from */}
