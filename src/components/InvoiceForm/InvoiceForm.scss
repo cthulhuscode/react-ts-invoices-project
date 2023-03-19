@@ -129,6 +129,10 @@
     mix-blend-mode: normal;
     opacity: 0.5;
     cursor: pointer;
+
+    @media screen and (max-width: 900px) {
+      width: calc(100vw + 16px);
+    }
   }
 }
 

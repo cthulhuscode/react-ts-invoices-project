@@ -24,8 +24,8 @@ interface AddressTo extends Address {
   };
 }
 
-interface InvoiceListItem {
-  id: number;
+export interface InvoiceListItem {
+  id: string;
   name: string;
   amount: number;
   price: number;
