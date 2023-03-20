@@ -1,0 +1,195 @@
+.InvoicePage {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+
+  margin: 24px 0px;
+  &__enlace {
+    margin-right: 660px;
+    text-decoration: none;
+  }
+  &__enlace img {
+    transform: rotate(180deg);
+    margin-right: 10px;
+  }
+
+  &__content {
+    width: 730px;
+    height: 88px;
+    background: #ffffff;
+    box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+  }
+
+  &__content2 {
+    height: min-content;
+    width: 730px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+    border-radius: 8px;
+    padding: 30px 40px;
+    padding-bottom: 60px;
+  }
+  &__colum2 {
+    display: flex;
+    gap: 8px;
+  }
+  &__rows {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__rows2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 80px;
+    margin: 30px 0px;
+    &__colum {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      &__date {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  }
+  &__rows3 {
+    height: 184px;
+    width: min-content;
+    background: #f9fafe;
+    border-radius: 8px;
+    padding: 12px;
+    margin-left: 10px;
+    &__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 24px;
+
+      margin: -12px;
+      height: 80px;
+      width: 634px;
+      margin-top: 20px;
+      background: #373b53;
+      border-radius: 0px 0px 8px 8px;
+    }
+  }
+  &__colum__items {
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  &__rows5 {
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%;
+    align-items: center;
+    margin-bottom: 10px;
+
+    // letras
+    &__name {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 18px;
+      letter-spacing: -0.229167px;
+      color: #7e88c3;
+    }
+    &__qty {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 18px;
+      letter-spacing: -0.229167px;
+      color: #7e88c3;
+    }
+    &__price {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 18px;
+      letter-spacing: -0.229167px;
+      color: #7e88c3;
+    }
+    &__total {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 18px;
+      letter-spacing: -0.229167px;
+      color: #7e88c3;
+    }
+  }
+
+  // letras
+  &__totalPrice {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+  }
+  &__amount {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 18px;
+    letter-spacing: -0.229167px;
+    color: #ffffff;
+  }
+  &__name {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #0c0e16;
+  }
+  &__qty {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    margin-left: 10px;
+  }
+  &__price {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #7e88c3;
+  }
+  &__total {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #0c0e16;
+  }
+  &__title2 {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #7e88c3;
+  }
+  &__title3 {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: -0.3125px;
+    color: #0c0e16;
+  }
+  &__title4 {
+    width: 90px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 18px;
+    letter-spacing: -0.229167px;
+    color: #7e88c3;
+  }
+}
