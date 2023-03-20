@@ -1,8 +1,11 @@
-export type PaymentTerms =
-  | "Net 1 Day"
-  | "Net 7 Days"
-  | "Net 14 Days"
-  | "Net 30 Days";
+export const paymentTerms = [
+  "Net 1 Day",
+  "Net 7 Days",
+  "Net 14 Days",
+  "Net 30 Days",
+] as const;
+
+export type PaymentTerms = (typeof paymentTerms)[number];
 
 export enum Statuses {
   draft = "Draft",
@@ -24,8 +27,8 @@ interface AddressTo extends Address {
   };
 }
 
-interface InvoiceListItem {
-  id: number;
+export interface InvoiceListItem {
+  id: string;
   name: string;
   amount: number;
   price: number;

@@ -15,10 +15,10 @@ export const useOnClickOutside = (
       }
       handler(event);
     };
-    document.addEventListener("mousedown", listener);
+    document.addEventListener("mouseup", listener);
     document.addEventListener("touchstart", listener);
     return () => {
-      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("mouseup", listener);
       document.removeEventListener("touchstart", listener);
     };
   }, [ref, handler]);

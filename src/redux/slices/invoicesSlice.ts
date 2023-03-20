@@ -21,7 +21,7 @@ const initialState: InvoicesState = {
     Pending: false,
     Draft: false,
   },
-  showForm: false,
+  showForm: true,
 };
 
 export const invoicesSlice = createSlice({

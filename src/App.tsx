@@ -5,7 +5,7 @@ import { SideNavBar } from "./layout";
 import "./App.scss";
 
 function App() {
-  const theme = useAppSelector((state) => state.theme.value);
+  const theme: string = useAppSelector((state) => state.theme.value);
 
   return (
     <div className={`App ${theme}`}>
