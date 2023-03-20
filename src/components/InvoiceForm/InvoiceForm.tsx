@@ -9,7 +9,7 @@ import { toggleForm } from "../../redux";
 import { Statuses } from "../../interfaces";
 
 import { ItemList } from "./ItemList/ItemList";
-import { DatePicker, InputText } from "../../ui";
+import { DatePicker, InputText, Select } from "../../ui";
 
 import "./InvoiceForm.scss";
 import { images } from "../../constants";
@@ -202,14 +202,16 @@ export const InvoiceForm = () => {
 
           <DatePicker onChangeDate={setDate} label={"Issue Date"} classes="" />
 
-          <InputText
+          {/* <InputText
             setInputHasError={setFormHasErrors}
             classes=""
             label="Payment Terms"
             name="paymentTerms"
             setState={setPaymentTerms}
             value={paymentTerms}
-          />
+          /> */}
+
+          <Select label={"Payment Terms"} setSelectedOption={setPaymentTerms} />
         </div>
 
         <InputText
