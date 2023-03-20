@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { images } from "../../constants";
 
 import { useDate } from "../../hooks/useDate";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import "./DatePicker.scss";
 
 interface DatePickerProps {
@@ -37,6 +38,7 @@ export const DatePicker = ({
   const [friendlyDate, setFriendlyDate] = useState(() =>
     formatDate(new Date())
   );
+  const ref = useRef(null);
 
   const [details, setDetails] = useState({
     showDatePicker: false,
@@ -44,6 +46,13 @@ export const DatePicker = ({
     month,
     selectedDay: todayTimestamp,
     monthDetails: getMonthDetails(year, month),
+  });
+
+  useOnClickOutside(ref, () => {
+    setDetails({
+      ...details,
+      showDatePicker: false,
+    });
   });
 
   const setMonth = (offset: number) => {
@@ -69,7 +78,10 @@ export const DatePicker = ({
   };
 
   const showDatePicker = () => {
-    setDetails({ ...details, showDatePicker: !details.showDatePicker });
+    setDetails({
+      ...details,
+      showDatePicker: !details.showDatePicker,
+    });
   };
 
   const onDateClick = (day: any) => {
@@ -88,10 +100,11 @@ export const DatePicker = ({
   };
 
   return (
-    <div className={`datepicker dp ${classes}`}>
+    <div className={`datepicker dp ${classes}`} ref={ref}>
       <label className="dp__label">{label}</label>
 
       <div
+        ref={ref}
         className="dp__date"
         onClick={() => {
           showDatePicker();
@@ -104,7 +117,7 @@ export const DatePicker = ({
       </div>
 
       {details.showDatePicker && (
-        <div className="dp__picker">
+        <div className="dp__picker" ref={ref}>
           <div className="picker__head">
             <div
               className="picker__arrow"
