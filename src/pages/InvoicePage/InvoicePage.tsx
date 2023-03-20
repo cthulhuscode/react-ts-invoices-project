@@ -44,7 +44,9 @@ export const InvoicePage = () => {
       <div className="InvoicePage__content2">
         <div className="InvoicePage__rows">
           <div className="InvoicePage__colum">
-            <h2>#XM9141</h2>
+            <h2 className="InvoicePage__title">
+              <span>#</span>XM9141
+            </h2>
             <p className="InvoicePage__title2">Graphic Design</p>
           </div>
           <div className="InvoicePage__colum">

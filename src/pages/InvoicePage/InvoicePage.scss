@@ -170,6 +170,16 @@
     letter-spacing: -0.25px;
     color: #0c0e16;
   }
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.8px;
+    color: #0c0e16;
+  }
+  &__title span {
+    color: #888eb0;
+  }
   &__title2 {
     font-weight: 500;
     font-size: 12px;
@@ -191,5 +201,90 @@
     line-height: 18px;
     letter-spacing: -0.229167px;
     color: #7e88c3;
+  }
+}
+.App.dark {
+  .InvoicePage {
+    &__enlace {
+      color: #ffffff;
+    }
+
+    &__content {
+      background: #1e2139;
+    }
+
+    &__content2 {
+      background: #1e2139;
+    }
+    &__rows2 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+      margin: 30px 0px;
+      &__colum {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        &__date {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+    }
+    &__rows3 {
+      background: #252945;
+      &__row {
+        background: #0c0e16;
+      }
+    }
+
+    &__rows5 {
+      // letras
+      &__name {
+        color: #dfe3fa;
+      }
+      &__qty {
+        color: #dfe3fa;
+      }
+      &__price {
+        color: #dfe3fa;
+      }
+      &__total {
+        color: #dfe3fa;
+      }
+    }
+
+    // letras
+    &__totalPrice {
+      color: #ffffff;
+    }
+    &__amount {
+      color: #ffffff;
+    }
+    &__name {
+      color: #ffffff;
+    }
+    &__qty {
+      color: #dfe3fa;
+    }
+    &__price {
+      color: #dfe3fa;
+    }
+    &__total {
+      color: #ffffff;
+    }
+    &__title {
+      color: #ffffff;
+    }
+    &__title2 {
+      color: #dfe3fa;
+    }
+    &__title3 {
+      color: #ffffff;
+    }
+    &__title4 {
+      color: #dfe3fa;
+    }
   }
 }

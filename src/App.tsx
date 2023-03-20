@@ -10,7 +10,6 @@ function App() {
   return (
     <div className={`App ${theme}`}>
       <SideNavBar />
-
       <HashRouter>
         <Routes>
           <Route path="/invoices/:id" element={<InvoicePage />} />
