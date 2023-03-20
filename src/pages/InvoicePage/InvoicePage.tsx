@@ -16,12 +16,6 @@ export const InvoicePage = () => {
       Price: "£ 200.00",
       total: "£ 400.00",
     },
-    {
-      name: "Design prueba :D",
-      qty: 4,
-      Price: "£ 200.00",
-      total: "£ 400.00",
-    },
   ];
   return (
     <div className="InvoicePage">
