@@ -29,9 +29,9 @@ export const InvoicePage = () => {
           <button>pending</button>
         </div>
         <div className="InvoicePage__colum2">
-          <button>Edit</button>
-          <button>Delete</button>
-          <button>Mark as Paid</button>
+          <button className="InvoicePage__btnEdit">Edit</button>
+          <button className="InvoicePage__btnDelete">Delete</button>
+          <button className="InvoicePage__btnMask">Mark as Paid</button>
         </div>
       </div>
 
