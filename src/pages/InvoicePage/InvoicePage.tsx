@@ -17,6 +17,7 @@ export const InvoicePage = () => {
       total: "£ 400.00",
     },
   ];
+  const claseBtn = "paid";
   return (
     <div className="InvoicePage">
       <a className="InvoicePage__enlace" href="">
@@ -26,12 +27,21 @@ export const InvoicePage = () => {
       <div className="InvoicePage__content">
         <div className="InvoicePage__colum2">
           <p className="InvoicePage__title2">Status</p>
-          <button>pending</button>
+
+          <div
+            className={`InvoicesListItem__button InvoicesListItem__button--${claseBtn}`}
+          >
+            <div
+              className={`InvoicesListItem__circle InvoicesListItem__circle--${claseBtn}`}
+            ></div>
+            <span>{claseBtn}</span>
+          </div>
+          {/* fin de boton pendign */}
         </div>
         <div className="InvoicePage__colum2">
-          <button>Edit</button>
-          <button>Delete</button>
-          <button>Mark as Paid</button>
+          <button className="InvoicePage__btnEdit">Edit</button>
+          <button className="InvoicePage__btnDelete">Delete</button>
+          <button className="InvoicePage__btnMask">Mark as Paid</button>
         </div>
       </div>
 
