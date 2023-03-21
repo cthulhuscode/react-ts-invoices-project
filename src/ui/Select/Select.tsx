@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
 import type { PaymentTerms } from "../../interfaces";
 
 import { images } from "../../constants";
@@ -11,7 +10,7 @@ import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 interface SelectProps {
   label: string;
-  setSelectedOption: Dispatch<SetStateAction<string>>;
+  setSelectedOption: (paymentTerms: PaymentTerms) => void;
 }
 
 export const Select = ({ label, setSelectedOption }: SelectProps) => {
@@ -39,7 +38,7 @@ export const Select = ({ label, setSelectedOption }: SelectProps) => {
       </label>
 
       <div className="select__control">
-        <span className="select__selected">{_selectedOption}</span>
+        <span className="select__selected">{_selectedOption.desc}</span>
         <motion.img
           className="select__img"
           src={images.rightArrow}
@@ -57,16 +56,19 @@ export const Select = ({ label, setSelectedOption }: SelectProps) => {
         {paymentTerms.map((pTerm) => (
           <li
             className="select__item"
-            key={pTerm}
-            id={pTerm}
-            value={pTerm}
-            onClick={(e) => {
-              const target = e.target as HTMLLIElement;
-              setSelectedOption(target.innerText);
-              _setSelectedOption(target.innerText as PaymentTerms);
+            key={pTerm.value}
+            value={pTerm.desc}
+            onClick={() => {
+              const payTerm = {
+                desc: pTerm.desc,
+                value: pTerm.value,
+              };
+
+              setSelectedOption(payTerm as PaymentTerms);
+              _setSelectedOption(payTerm as PaymentTerms);
             }}
           >
-            {pTerm}
+            {pTerm.desc}
           </li>
         ))}
       </ul>

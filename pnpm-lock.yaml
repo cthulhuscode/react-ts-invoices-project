@@ -34,7 +34,6 @@ specifiers:
 
 dependencies:
   '@reduxjs/toolkit': 1.9.3_k4ae6lp43ej6mezo3ztvx6pykq
-  '@types/uuid': 9.0.1
   framer-motion: 10.0.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -49,6 +48,7 @@ devDependencies:
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
   '@types/testing-library__jest-dom': 5.14.5
+  '@types/uuid': 9.0.1
   '@typescript-eslint/eslint-plugin': 5.53.0_7kw3g6rralp5ps6mg3uyzz6azm
   '@vitejs/plugin-react': 3.1.0_vite@4.1.4
   eslint: 8.34.0
@@ -809,7 +809,7 @@ packages:
 
   /@types/uuid/9.0.1:
     resolution: {integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==}
-    dev: false
+    dev: true
 
   /@types/yargs-parser/21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}

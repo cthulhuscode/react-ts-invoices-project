@@ -93,7 +93,7 @@ export const useDate = () => {
       ? monthMap[Math.max(Math.min(11, month), 0)]
       : "Month";
 
-  const getDateStringFromTimestamp = (timestamp: number) => {
+  const getDateStringFromTimestamp = (timestamp: Date) => {
     const dateObject = new Date(timestamp);
     const month = dateObject.getMonth() + 1;
     const date = dateObject.getDate();
