@@ -5,9 +5,9 @@ import "./InputText.scss";
 interface InputTextProps {
   classes: string;
   label: string;
-  value: string;
+  value: string | undefined;
   name: string;
-  setState: Dispatch<SetStateAction<string>>;
+  setState: (target: EventTarget & HTMLInputElement) => void;
   setInputHasError: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -28,7 +28,7 @@ export const InputText = ({
       setError(false);
     }
 
-    setState(e.target.value);
+    setState(e.target);
   };
 
   const [error, setError] = useState(false);
