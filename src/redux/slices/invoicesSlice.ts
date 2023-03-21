@@ -2,7 +2,11 @@ import { v4 as uuidv4 } from "uuid";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import type { Invoice, Statuses } from "../../interfaces";
+import { paymentTerms, Statuses } from "../../interfaces";
+import type { Invoice, InvoiceListItem } from "../../interfaces";
+import { useDate } from "../../hooks/useDate";
+
+const { getDateStringFromTimestamp, formatDate } = useDate();
 
 // Define a type for the slice state
 interface InvoicesState {
@@ -11,26 +15,75 @@ interface InvoicesState {
     [key in Statuses]: boolean;
   };
   showForm: boolean;
+  currentInvoice: Partial<Invoice>;
 }
+
+const initialInvoice: Partial<Invoice> = {
+  status: Statuses.draft,
+  billFrom: {
+    street: "",
+    city: "",
+    postCode: "",
+    country: "",
+  },
+  billTo: {
+    street: "",
+    city: "",
+    postCode: "",
+    country: "",
+  },
+  client: {
+    name: "",
+    email: "",
+  },
+  date: {
+    timestamp: new Date().toISOString(),
+    dateString: getDateStringFromTimestamp(new Date()),
+    friendlyDate: formatDate(new Date()),
+  },
+  paymentTerms: paymentTerms[0],
+  paymentDue: {
+    timestamp: new Date().toISOString(),
+    dateString: getDateStringFromTimestamp(new Date()),
+    friendlyDate: formatDate(new Date()),
+  },
+  projectDescription: "",
+  itemList: {
+    0: {
+      id: "0",
+      name: "",
+      amount: 0,
+      price: 0,
+      total: 0,
+    },
+  },
+};
 
 // Define the initial state using that type
 const initialState: InvoicesState = {
-  list: null,
+  list: [],
   selectedStatuses: {
     Paid: false,
     Pending: false,
     Draft: false,
   },
   showForm: true,
+  currentInvoice: initialInvoice,
 };
 
 export const invoicesSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
-    addInvoice: (state, action: PayloadAction<Invoice>) => {
-      const newInvoice = { ...action.payload, id: uuidv4() };
-      state.list?.push(newInvoice);
+    addInvoice: (state, action: PayloadAction<Invoice | undefined>) => {
+      if (action.payload !== undefined) {
+        const newInvoice = { ...action.payload, id: uuidv4() };
+        state.list?.push(newInvoice);
+      } else {
+        state.currentInvoice.id = uuidv4();
+        state.list?.push(state.currentInvoice as Invoice);
+        state.currentInvoice = initialInvoice;
+      }
     },
     editInvoice: (state, action: PayloadAction<Invoice>) => {
       const editedInvoice = action.payload;
@@ -56,13 +109,53 @@ export const invoicesSlice = createSlice({
         state.showForm = !state.showForm;
       }
     },
+    editCurrentInvoice: (state, action: PayloadAction<Partial<Invoice>>) => {
+      state.currentInvoice = action.payload;
+    },
+    addNewInvoiceListItem: (state) => {
+      const itemList = state.currentInvoice.itemList;
+
+      if (itemList !== null) {
+        const id = uuidv4();
+        const item = {
+          id,
+          name: "",
+          amount: 0,
+          price: 0,
+          total: 0,
+        };
+
+        state.currentInvoice.itemList = {
+          ...itemList,
+          [id]: item,
+        };
+      }
+    },
+    editInvoiceListItem: (state, action: PayloadAction<InvoiceListItem>) => {
+      const itemList = state.currentInvoice.itemList;
+      const item = action.payload;
+
+      state.currentInvoice.itemList = { ...itemList, [item.id]: item };
+    },
   },
 });
 
-export const { addInvoice, editInvoice, deleteInvoice, toggleForm } =
-  invoicesSlice.actions;
+export const {
+  addInvoice,
+  editInvoice,
+  deleteInvoice,
+  toggleForm,
+  editCurrentInvoice,
+  addNewInvoiceListItem,
+  editInvoiceListItem,
+} = invoicesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const getInvoices = (state: RootState) => state.invoices.list;
+export const getInvoiceItemsList = (state: RootState) => {
+  const itemList = state.invoices.currentInvoice?.itemList;
+  if (itemList !== undefined) return Object.entries(itemList);
+  else return null;
+};
 
 export default invoicesSlice.reducer;
