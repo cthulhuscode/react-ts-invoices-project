@@ -4,18 +4,11 @@ import { images } from "../../constants";
 
 import { useDate } from "../../hooks/useDate";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import type { CustomDate } from "../../interfaces";
 import "./DatePicker.scss";
 
 interface DatePickerProps {
-  onChangeDate: ({
-    timestamp,
-    dateString,
-    friendlyDate,
-  }: {
-    timestamp: number;
-    dateString: string;
-    friendlyDate: string;
-  }) => void;
+  onChangeDate: ({ timestamp, dateString, friendlyDate }: CustomDate) => void;
   label: string;
   classes: string;
 }
