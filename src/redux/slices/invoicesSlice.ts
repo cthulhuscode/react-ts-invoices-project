@@ -60,6 +60,7 @@ const initialInvoice: Partial<Invoice> = {
       total: 0,
     },
   },
+  totalPrice: 0,
 };
 
 // Define the initial state using that type
@@ -135,6 +136,17 @@ export const invoicesSlice = createSlice({
       state.currentInvoice = initialInvoice;
     },
     editCurrentInvoice: (state, action: PayloadAction<Partial<Invoice>>) => {
+      let items:
+        | Record<string | number, InvoiceListItem>
+        | undefined
+        | InvoiceListItem[] = action.payload.itemList;
+
+      if (items !== undefined) {
+        items = Object.values(items);
+        const totalPrice = items.reduce((a, b) => a + b.total, 0);
+        action.payload.totalPrice = totalPrice;
+      }
+
       state.currentInvoice = action.payload;
     },
     addNewInvoiceListItem: (state) => {

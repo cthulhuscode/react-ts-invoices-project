@@ -48,4 +48,5 @@ export interface Invoice {
   paymentDue: CustomDate;
   projectDescription: string;
   itemList: Record<string | number, InvoiceListItem>;
+  totalPrice: number;
 }
