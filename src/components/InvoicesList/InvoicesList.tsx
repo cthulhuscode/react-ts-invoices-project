@@ -1,8 +1,12 @@
 import React from "react";
 import "./InvoicesList.scss";
 import { InvoicesListItem } from "../InvoicesListItem/InvoicesListItem";
+import { useAppSelector } from "../../hooks/redux";
+import { images } from "../../constants";
 
 export const InvoicesList = () => {
+  const invoices = useAppSelector((state) => state.invoices.list);
+
   const lista = [
     {
       id: "rt3081",
@@ -28,16 +32,20 @@ export const InvoicesList = () => {
   ];
   return (
     <div className="InvoicesList">
-      {lista.map((item) => (
-        <InvoicesListItem
-          key={item.id}
-          id={item.id}
-          date={item.date}
-          name={item.name}
-          price={item.price}
-          class={item.class}
-        />
-      ))}
+      {invoices !== null ? (
+        lista.map((item) => (
+          <InvoicesListItem
+            key={item.id}
+            id={item.id}
+            date={item.date}
+            name={item.name}
+            price={item.price}
+            class={item.class}
+          />
+        ))
+      ) : (
+        <img src={images.zeroInvoices} />
+      )}
     </div>
   );
 };
