@@ -1,22 +1,31 @@
-import React from "react";
 import "./InvoicePage.scss";
 import { images } from "../../constants/images";
+import { Navigate, useParams } from "react-router-dom";
+import { useAppSelector } from "../../hooks/redux";
+// import type { Invoice } from "../../interfaces";
 
 export const InvoicePage = () => {
-  const product = [
-    {
-      name: "Banner Design",
-      qty: 1,
-      Price: "£ 156.00",
-      total: "£ 156.00",
-    },
-    {
-      name: "Email Design",
-      qty: 2,
-      Price: "£ 200.00",
-      total: "£ 400.00",
-    },
-  ];
+  const { id } = useParams();
+
+  const invoice = useAppSelector(
+    (state) => state.invoices.list?.filter((invoice) => invoice.id === id)[0]
+  );
+
+  if (invoice === null || invoice === undefined)
+    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+    return <Navigate to={"/"} />;
+
+  const {
+    projectDescription,
+    billFrom,
+    billTo,
+    client,
+    date,
+    paymentDue,
+    itemList,
+    id: invoiceId,
+  } = invoice;
+
   const claseBtn = "paid";
   return (
     <div className="InvoicePage">
@@ -49,13 +58,15 @@ export const InvoicePage = () => {
         <div className="InvoicePage__rows">
           <div className="InvoicePage__colum">
             <h2 className="InvoicePage__title">
-              <span>#</span>XM9141
+              <span>#</span>
+              {invoiceId?.substring(0, 6)}
             </h2>
-            <p className="InvoicePage__title2">Graphic Design</p>
+            <p className="InvoicePage__title2">{projectDescription}</p>
           </div>
           <div className="InvoicePage__colum">
             <p className="InvoicePage__title4">
-              19 Union Terrace London E1 3EZ United Kingdom
+              {billFrom.street} {billFrom.city} {billFrom.postCode}{" "}
+              {billFrom.country}
             </p>
           </div>
         </div>
@@ -64,23 +75,23 @@ export const InvoicePage = () => {
           <div className="InvoicePage__rows2__colum">
             <div className="InvoicePage__rows2__colum__date">
               <p className="InvoicePage__title2">Invoice Date</p>
-              <h3 className="InvoicePage__title3">21 Aug 2021</h3>
+              <h3 className="InvoicePage__title3">{date.friendlyDate}</h3>
             </div>
             <div className="InvoicePage__rows2__colum__date">
               <p className="InvoicePage__title2">Payment Due</p>
-              <h3 className="InvoicePage__title3">20 Sep 2021</h3>
+              <h3 className="InvoicePage__title3">{paymentDue.friendlyDate}</h3>
             </div>
           </div>
           <div className="InvoicePage__rows2__colum">
             <p className="InvoicePage__title2">Bill To</p>
-            <h3 className="InvoicePage__title3">Alex Grim</h3>
+            <h3 className="InvoicePage__title3">{client.name}</h3>
             <p className="InvoicePage__title4">
-              84 Church Way Bradford BD1 9PB United Kingdom
+              {billTo.street} {billTo.city} {billTo.postCode} {billTo.country}
             </p>
           </div>
           <div className="InvoicePage__rows2__colum">
             <p className="InvoicePage__title2"> Sent to</p>
-            <h3 className="InvoicePage__title3">alexgrim@mail.com</h3>
+            <h3 className="InvoicePage__title3">{client.email}</h3>
           </div>
         </div>
 
@@ -91,11 +102,11 @@ export const InvoicePage = () => {
             <p className="InvoicePage__rows5__price">Price</p>
             <p className="InvoicePage__rows5__total">Total</p>
           </div>
-          {product.map((item) => (
-            <div className="InvoicePage__colum__items" key={item.name}>
+          {Object.entries(itemList).map(([id, item]) => (
+            <div className="InvoicePage__colum__items" key={item.id}>
               <h2 className="InvoicePage__name">{item.name}</h2>
-              <p className="InvoicePage__qty">{item.qty}</p>
-              <p className="InvoicePage__price">{item.Price}</p>
+              <p className="InvoicePage__qty">{item.amount}</p>
+              <p className="InvoicePage__price">{item.price}</p>
               <h3 className="InvoicePage__total">{item.total}</h3>
             </div>
           ))}
