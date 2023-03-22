@@ -10,7 +10,7 @@ const { getDateStringFromTimestamp, formatDate } = useDate();
 
 // Define a type for the slice state
 interface InvoicesState {
-  list: Invoice[] | null;
+  list: Invoice[];
   selectedStatuses: {
     [key in Statuses]: boolean;
   };
@@ -81,7 +81,10 @@ export const invoicesSlice = createSlice({
         state.list?.push(newInvoice);
       } else {
         state.currentInvoice.id = uuidv4();
-        state.list?.push(state.currentInvoice as Invoice);
+        if (state.list !== null)
+          state.list = [...state.list, state.currentInvoice as Invoice];
+        else state.list = [state.currentInvoice as Invoice];
+
         state.currentInvoice = initialInvoice;
       }
     },
