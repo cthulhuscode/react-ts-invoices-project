@@ -41,7 +41,9 @@ export const HomePage = () => {
           <StatusFilter windowWidth={windowWidth} />
 
           <motion.button
-            onClick={() => dispatch(toggleForm())}
+            onClick={() =>
+              dispatch(toggleForm({ show: true, operation: "create" }))
+            }
             className="header__btn"
             whileTap={{ scale: 0.95 }}
           >
