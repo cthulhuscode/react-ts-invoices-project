@@ -1,11 +1,13 @@
 import "./InvoicePage.scss";
 import { images } from "../../constants/images";
 import { Navigate, useParams } from "react-router-dom";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { toggleForm } from "../../redux";
 // import type { Invoice } from "../../interfaces";
 
 export const InvoicePage = () => {
   const { id } = useParams();
+  const dispatch = useAppDispatch();
 
   const invoice = useAppSelector(
     (state) => state.invoices.list?.filter((invoice) => invoice.id === id)[0]
@@ -24,9 +26,13 @@ export const InvoicePage = () => {
     paymentDue,
     itemList,
     id: invoiceId,
+    status,
   } = invoice;
 
-  const claseBtn = "paid";
+  const handleEditClick = () => {
+    dispatch(toggleForm(true));
+  };
+
   return (
     <div className="InvoicePage">
       <a className="InvoicePage__enlace" href="">
@@ -38,17 +44,19 @@ export const InvoicePage = () => {
           <p className="InvoicePage__title2">Status</p>
 
           <div
-            className={`InvoicesListItem__button InvoicesListItem__button--${claseBtn}`}
+            className={`InvoicesListItem__button InvoicesListItem__button--${status.toLowerCase()}`}
           >
             <div
-              className={`InvoicesListItem__circle InvoicesListItem__circle--${claseBtn}`}
+              className={`InvoicesListItem__circle InvoicesListItem__circle--${status.toLowerCase()}`}
             ></div>
-            <span>{claseBtn}</span>
+            <span>{status.toLowerCase()}</span>
           </div>
           {/* fin de boton pendign */}
         </div>
         <div className="InvoicePage__colum2">
-          <button className="InvoicePage__btnEdit">Edit</button>
+          <button className="InvoicePage__btnEdit" onClick={handleEditClick}>
+            Edit
+          </button>
           <button className="InvoicePage__btnDelete">Delete</button>
           <button className="InvoicePage__btnMask">Mark as Paid</button>
         </div>
@@ -59,7 +67,7 @@ export const InvoicePage = () => {
           <div className="InvoicePage__colum">
             <h2 className="InvoicePage__title">
               <span>#</span>
-              {invoiceId?.substring(0, 6)}
+              {invoiceId?.substring(0, 8)}
             </h2>
             <p className="InvoicePage__title2">{projectDescription}</p>
           </div>
