@@ -9,6 +9,7 @@ import remove from "../assets/delete.svg";
 import leftArrow from "../assets/left-arrow.svg";
 import rightArrow from "../assets/right-arrow.svg";
 import calendar from "../assets/calendar.svg";
+import zeroInvoices from "../assets/zeroInvoices.svg";
 
 export const images = {
   logo,
@@ -22,4 +23,5 @@ export const images = {
   leftArrow,
   rightArrow,
   calendar,
+  zeroInvoices,
 };
