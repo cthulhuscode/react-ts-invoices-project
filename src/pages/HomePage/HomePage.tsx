@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import { InvoiceForm, InvoicesList } from "../../components";
+import { InvoicesList } from "../../components";
 import { images } from "../../constants";
 import { StatusFilter } from "../../ui";
 import "./HomePage.scss";
@@ -41,7 +41,9 @@ export const HomePage = () => {
           <StatusFilter windowWidth={windowWidth} />
 
           <motion.button
-            onClick={() => dispatch(toggleForm())}
+            onClick={() =>
+              dispatch(toggleForm({ show: true, operation: "create" }))
+            }
             className="header__btn"
             whileTap={{ scale: 0.95 }}
           >
@@ -59,8 +61,6 @@ export const HomePage = () => {
       </div>
 
       <InvoicesList />
-
-      <InvoiceForm />
     </div>
   );
 };

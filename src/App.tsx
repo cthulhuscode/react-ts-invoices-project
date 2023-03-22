@@ -3,14 +3,17 @@ import { useAppSelector } from "./hooks/redux";
 import { ErrorPage, HomePage, InvoicePage } from "./pages";
 import { SideNavBar } from "./layout";
 import "./App.scss";
+import { InvoiceForm } from "./components";
 
 function App() {
   const theme: string = useAppSelector((state) => state.theme.value);
 
   return (
     <div className={`App ${theme}`}>
-      <SideNavBar />
       <HashRouter>
+        <SideNavBar />
+        <InvoiceForm />
+
         <Routes>
           <Route path="/invoices/:id" element={<InvoicePage />} />
           <Route path="/invoices" element={<HomePage />} />

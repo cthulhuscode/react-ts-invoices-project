@@ -1,9 +1,16 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
-import { addInvoice, editCurrentInvoice, toggleForm } from "../../redux";
+import {
+  addInvoice,
+  editCurrentInvoice,
+  editInvoice,
+  resetCurrentInvoice,
+  setCurrentInvoice,
+  toggleForm,
+} from "../../redux";
 
 import type { PaymentTerms, CustomDate, Invoice } from "../../interfaces";
 
@@ -15,17 +22,33 @@ import { DatePicker, InputText, Select } from "../../ui";
 import "./InvoiceForm.scss";
 import { images } from "../../constants";
 import { useDate } from "../../hooks/useDate";
+import { useLocation } from "react-router-dom";
 
 export const InvoiceForm = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
   const ref = useRef(null);
   const dispatch = useAppDispatch();
+
+  const form = useAppSelector((state) => state.invoices.form);
+  const { show, operation } = form;
+
+  useEffect(() => {
+    const editInvoice = location.pathname.includes("/invoices/");
+    if (operation === "edit" && editInvoice) {
+      const invoiceId = location.pathname.split("/invoices/")[1];
+      dispatch(setCurrentInvoice(invoiceId));
+    } else if (operation === "edit" && !editInvoice) {
+      dispatch(resetCurrentInvoice());
+    }
+  }, [pathname, show]);
+
   const currentInvoice = useAppSelector(
     (state) => state.invoices.currentInvoice
   );
-  const { billFrom, billTo, client, projectDescription } = currentInvoice;
+  const { billFrom, billTo, client, projectDescription, id } = currentInvoice;
 
   const [formHasErrors, setFormHasErrors] = useState(false);
-  const showForm = useAppSelector((state) => state.invoices.showForm);
   const { getDateStringFromTimestamp, formatDate } = useDate();
 
   const handleDateChange = (date: CustomDate) => {
@@ -75,14 +98,41 @@ export const InvoiceForm = () => {
     dispatch(editCurrentInvoice(editingInvoice));
   };
 
-  const handleSaveClick = (status: Statuses) => {
-    dispatch(editCurrentInvoice({ ...currentInvoice, status }));
+  const handleSaveClick = (status: Statuses | undefined) => {
+    dispatch(
+      editCurrentInvoice({
+        ...currentInvoice,
+        status: status !== undefined ? status : currentInvoice.status,
+      })
+    );
 
-    if (!formHasErrors && areFormFieldsFilled(currentInvoice)) {
+    // Save edited invoice
+    if (operation === "edit") {
+      dispatch(editInvoice(currentInvoice as Invoice));
+      dispatch(resetCurrentInvoice());
+      dispatch(toggleForm(false));
+
+      // Save new invoice as draft
+    } else if (status === Statuses.draft) {
       dispatch(addInvoice());
+      dispatch(resetCurrentInvoice());
+      dispatch(toggleForm(false));
+
+      // Save and send a new invoice
+    } else if (!formHasErrors && areFormFieldsFilled(currentInvoice)) {
+      dispatch(addInvoice());
+      dispatch(resetCurrentInvoice());
+      dispatch(toggleForm(false));
+
+      // Form has errors
     } else {
       console.log("The form has errors");
     }
+  };
+
+  const handleCancelClick = () => {
+    dispatch(resetCurrentInvoice());
+    dispatch(toggleForm(false));
   };
 
   useOnClickOutside(ref, () => {
@@ -90,14 +140,20 @@ export const InvoiceForm = () => {
   });
 
   return (
-    <div className="iform" style={{ display: showForm ? "flex" : "none" }}>
+    <div className="iform" style={{ display: show ? "flex" : "none" }}>
       <div className="iform-content" ref={ref}>
         <div className="iform__back">
           <img src={images.leftArrow} alt="go back" />
           <span>Go back</span>
         </div>
 
-        <h1 className="iform__title">New Invoice</h1>
+        <h1 className="iform__title">
+          {operation === "create" ? "New Invoice" : "Edit"}{" "}
+          {operation === "edit" && <span>#</span>}
+          {operation === "edit" && id !== null && id !== undefined
+            ? id.substring(0, 8)
+            : ""}
+        </h1>
 
         {/* Bill from */}
         <h4 className="iform__subtitle">Bill From</h4>
@@ -197,7 +253,7 @@ export const InvoiceForm = () => {
           />
         </div>
 
-        <div className="iform__address-row mt-48">
+        <div className="mt-48 iform__address-row-controls">
           <DatePicker
             onChangeDate={handleDateChange}
             label={"Issue Date"}
@@ -221,16 +277,27 @@ export const InvoiceForm = () => {
 
         {/* Item List */}
         <ItemList />
+        <span
+          className="iform__error-msg"
+          style={{ display: formHasErrors ? "unset" : "none" }}
+        >
+          - All fields must be added
+        </span>
 
         <div className="iform__btns">
           <motion.button
+            style={{ visibility: operation === "edit" ? "hidden" : "unset" }}
             className="iform-btn iform-btn__discard"
             whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              handleCancelClick();
+            }}
           >
             Discard
           </motion.button>
           <div className="iform__btns-save">
             <motion.button
+              style={{ display: operation === "edit" ? "none" : "unset" }}
               className="iform-btn iform-btn__draft"
               whileTap={{ scale: 0.95 }}
               onClick={() => {
@@ -239,6 +306,18 @@ export const InvoiceForm = () => {
             >
               Save as Draft
             </motion.button>
+
+            <motion.button
+              style={{ display: operation === "create" ? "none" : "unset" }}
+              className="iform-btn iform-btn__discard"
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                handleCancelClick();
+              }}
+            >
+              Cancel
+            </motion.button>
+
             <motion.button
               className="iform-btn iform-btn__save"
               whileTap={{ scale: 0.95 }}
@@ -246,7 +325,7 @@ export const InvoiceForm = () => {
                 handleSaveClick(Statuses.pending);
               }}
             >
-              Save & Send
+              {operation === "edit" ? "Save changes" : "Save & Send"}
             </motion.button>
           </div>
         </div>
