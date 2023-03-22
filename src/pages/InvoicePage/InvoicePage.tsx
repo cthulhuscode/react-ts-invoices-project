@@ -1,6 +1,6 @@
 import "./InvoicePage.scss";
 import { images } from "../../constants/images";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleForm } from "../../redux";
 // import type { Invoice } from "../../interfaces";
@@ -30,15 +30,15 @@ export const InvoicePage = () => {
   } = invoice;
 
   const handleEditClick = () => {
-    dispatch(toggleForm(true));
+    dispatch(toggleForm({ show: true, operation: "edit" }));
   };
 
   return (
     <div className="InvoicePage">
-      <a className="InvoicePage__enlace" href="">
+      <Link className="InvoicePage__enlace" to={"/"}>
         <img src={images.flecha} alt="" />
         Go back
-      </a>
+      </Link>
       <div className="InvoicePage__content">
         <div className="InvoicePage__colum2">
           <p className="InvoicePage__title2">Status</p>
