@@ -7,7 +7,8 @@
 
   position: absolute;
   z-index: 1;
-  left: -16px;
+  /*sidenavbar width - hiding 16px of form*/
+  left: calc(103px - 16px);
   top: 0;
   bottom: 0;
 
@@ -24,7 +25,7 @@
     flex-direction: column;
     align-items: center;
 
-    /* 72px because of left: 16px */
+    /* 72px because of left: -16px */
     padding: 56px 56px 32px 72px;
     overflow-y: scroll;
 
@@ -190,6 +191,7 @@
   }
 
   @media screen and (max-width: 900px) {
+    top: 80px;
     left: 0;
   }
 
