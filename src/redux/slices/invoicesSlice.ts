@@ -14,7 +14,10 @@ interface InvoicesState {
   selectedStatuses: {
     [key in Statuses]: boolean;
   };
-  showForm: boolean;
+  form: {
+    show: boolean;
+    operation: "edit" | "create";
+  };
   currentInvoice: Partial<Invoice>;
 }
 
@@ -67,7 +70,10 @@ const initialState: InvoicesState = {
     Pending: false,
     Draft: false,
   },
-  showForm: true,
+  form: {
+    show: true,
+    operation: "create",
+  },
   currentInvoice: initialInvoice,
 };
 
@@ -105,12 +111,28 @@ export const invoicesSlice = createSlice({
         );
       }
     },
-    toggleForm: (state, action: PayloadAction<boolean | undefined>) => {
-      if (action?.payload !== undefined) {
-        state.showForm = action.payload;
+    toggleForm: (
+      state,
+      action: PayloadAction<
+        { show: boolean; operation: "edit" | "create" } | undefined | boolean
+      >
+    ) => {
+      if (typeof action?.payload === "object") {
+        state.form = action.payload;
+      } else if (typeof action?.payload === "boolean") {
+        state.form.show = action.payload;
       } else {
-        state.showForm = !state.showForm;
+        state.form.show = !state.form.show;
       }
+    },
+    setCurrentInvoice: (state, action: PayloadAction<string>) => {
+      const invoice = state.list.filter(
+        (invoice) => invoice.id === action.payload
+      )[0];
+      state.currentInvoice = invoice;
+    },
+    resetCurrentInvoice: (state) => {
+      state.currentInvoice = initialInvoice;
     },
     editCurrentInvoice: (state, action: PayloadAction<Partial<Invoice>>) => {
       state.currentInvoice = action.payload;
@@ -148,6 +170,8 @@ export const {
   editInvoice,
   deleteInvoice,
   toggleForm,
+  setCurrentInvoice,
+  resetCurrentInvoice,
   editCurrentInvoice,
   addNewInvoiceListItem,
   editInvoiceListItem,
