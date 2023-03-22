@@ -75,6 +75,10 @@
     line-height: 32px;
     letter-spacing: -0.5px;
     color: colors.$black-darkest;
+
+    span {
+      color: colors.$gray-dark;
+    }
   }
 
   &__subtitle {
@@ -97,6 +101,22 @@
 
     &--padding {
       padding-top: 24px;
+    }
+    @media screen and (max-width: 632px) {
+      flex-wrap: wrap;
+      & > div {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+  }
+
+  &__address-row-controls {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+    @media screen and (max-width: 480px) {
+      flex-wrap: wrap;
     }
   }
 
@@ -197,6 +217,7 @@
 
   @media screen and (max-width: 632px) {
     width: 100%;
+    padding-bottom: 70px;
   }
 }
 
