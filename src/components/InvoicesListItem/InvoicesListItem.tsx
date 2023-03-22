@@ -5,7 +5,7 @@ interface InvoicesListItemProps {
   id: string;
   date: string;
   name: string;
-  price: string;
+  price: string | number;
   class: string;
 }
 
@@ -15,7 +15,7 @@ export const InvoicesListItem = (props: InvoicesListItemProps) => {
       <div className="InvoicesListItem__content">
         <h2 className="InvoicesListItem__id">
           <span>#</span>
-          {props.id}
+          {props.id.substring(0, 8)}
         </h2>
         <p className="InvoicesListItem__date">{props.date}</p>
         <p className="InvoicesListItem__name">{props.name}</p>
