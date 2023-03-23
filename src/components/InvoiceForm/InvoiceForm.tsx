@@ -141,7 +141,14 @@ export const InvoiceForm = () => {
 
   return (
     <div className="iform" style={{ display: show ? "flex" : "none" }}>
-      <div className="iform-content" ref={ref}>
+      <motion.div
+        initial={{ x: -632 }}
+        whileInView={{ x: 0 }}
+        exit={{ x: -632 }}
+        transition={{ duration: 0.65, ease: "easeInOut" }}
+        className="iform-content"
+        ref={ref}
+      >
         <div className="iform__back">
           <img src={images.leftArrow} alt="go back" />
           <span>Go back</span>
@@ -329,7 +336,7 @@ export const InvoiceForm = () => {
             </motion.button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <div className="iform-blur"></div>
     </div>
