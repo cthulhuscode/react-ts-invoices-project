@@ -1,12 +1,15 @@
 .InvoicePage {
-  max-width: 1200px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  align-items: center;
+  height: 100%;
+  margin-left: 103px;
 
-  margin: 64px 0px 24px 0;
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    margin: 64px 0px 24px 0;
+  }
 
   &__enlace {
     margin-right: 660px;
@@ -276,6 +279,10 @@
   &__button--draft {
     color: #373b53;
     background: rgba(55, 59, 83, 0.06);
+  }
+
+  @media screen and (max-width: 900px) {
+    margin-left: 0;
   }
 }
 @media screen and (max-width: 778px) {
