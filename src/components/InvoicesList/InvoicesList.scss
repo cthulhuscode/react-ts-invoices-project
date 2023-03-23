@@ -18,6 +18,10 @@
     max-width: 730px;
   }
 
+  &__link {
+    text-decoration: none;
+  }
+
   &__zero-invoices {
     flex: 1;
     width: 100%;

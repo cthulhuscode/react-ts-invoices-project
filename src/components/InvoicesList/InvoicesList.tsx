@@ -1,8 +1,8 @@
-import React from "react";
 import "./InvoicesList.scss";
 import { InvoicesListItem } from "../InvoicesListItem/InvoicesListItem";
 import { useAppSelector } from "../../hooks/redux";
 import { images } from "../../constants";
+import { Link } from "react-router-dom";
 
 export const InvoicesList = () => {
   const invoices = useAppSelector((state) => state.invoices.list);
@@ -12,14 +12,20 @@ export const InvoicesList = () => {
       <div className="InvoicesList__list">
         {invoices.length > 0 &&
           invoices.map((item, index) => (
-            <InvoicesListItem
+            <Link
+              className="InvoicesList__link"
               key={item.id}
-              id={item.id === null ? index.toString() : item.id}
-              date={item.date.friendlyDate}
-              name={item.client.name}
-              price={item.totalPrice}
-              class={item.status.toLowerCase()}
-            />
+              to={`/invoices/${item.id !== null ? item.id : ""}`}
+            >
+              <InvoicesListItem
+                key={item.id}
+                id={item.id === null ? index.toString() : item.id}
+                date={item.date.friendlyDate}
+                name={item.client.name}
+                price={item.totalPrice}
+                class={item.status.toLowerCase()}
+              />
+            </Link>
           ))}
       </div>
 
