@@ -3,3 +3,4 @@ export * from "./InvoicesListItem/InvoicesListItem";
 export * from "./InvoiceForm/InvoiceForm";
 export * from "./InvoiceForm/ItemList/ItemList";
 export * from "./InvoiceForm/ItemList/ListItem/ListItem";
+export * from "./DeleteModal/DeleteModal";
