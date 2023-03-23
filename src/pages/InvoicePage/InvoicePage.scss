@@ -3,6 +3,10 @@
   height: 100%;
   margin-left: 103px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &__body {
     display: flex;
     flex-direction: column;
@@ -280,15 +284,22 @@
     color: #373b53;
     background: rgba(55, 59, 83, 0.06);
   }
-
-  @media screen and (max-width: 900px) {
+}
+@media screen and (max-width: 900px) {
+  .InvoicePage {
     margin-left: 0;
+
+    &__body {
+      margin-top: 128px;
+    }
   }
 }
+
 @media screen and (max-width: 778px) {
   .InvoicePage {
-    transform: scale(0.9);
-    margin-top: 24px;
+    &__body {
+      transform: scale(0.9);
+    }
     &__enlace {
       margin-right: 590px;
       text-decoration: none;
@@ -297,15 +308,18 @@
 }
 @media screen and (max-width: 678px) {
   .InvoicePage {
-    max-width: 1200px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    align-items: center;
-    transform: scale(1);
+    &__body {
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: center;
+      transform: scale(1);
 
-    margin: 32px 0px;
+      margin-top: 112px;
+    }
+
     &__enlace {
       margin-right: 250px;
       text-decoration: none;
