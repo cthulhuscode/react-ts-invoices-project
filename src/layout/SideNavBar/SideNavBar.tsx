@@ -1,7 +1,7 @@
 import "./SideNavBar.scss";
 import React, { useState } from "react";
 import { images } from "../../constants/images";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch } from "../../redux/hooks";
 import { toggleTheme } from "../../redux";
 import { useNavigate } from "react-router-dom";
 

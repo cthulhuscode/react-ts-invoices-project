@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addNewInvoiceListItem } from "../../../redux";
 import "./ItemList.scss";
 import { ListItem } from "./ListItem/ListItem";

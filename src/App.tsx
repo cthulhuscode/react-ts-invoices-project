@@ -1,5 +1,5 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { useAppSelector } from "./hooks/redux";
+import { useAppSelector } from "./redux/hooks";
 import { ErrorPage, HomePage, InvoicePage } from "./pages";
 import { SideNavBar } from "./layout";
 import "./App.scss";

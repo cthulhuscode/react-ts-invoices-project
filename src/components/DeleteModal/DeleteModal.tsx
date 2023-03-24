@@ -2,7 +2,7 @@ import { useRef } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch } from "../../redux/hooks";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { deleteInvoice } from "../../redux";
 import "./DeleteModal.scss";
