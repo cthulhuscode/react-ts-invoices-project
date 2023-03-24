@@ -5,7 +5,7 @@ import { InvoicesList } from "../../components";
 import { images } from "../../constants";
 import { StatusFilter } from "../../ui";
 import "./HomePage.scss";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch } from "../../redux/hooks";
 import { toggleForm } from "../../redux";
 
 export const HomePage = () => {
