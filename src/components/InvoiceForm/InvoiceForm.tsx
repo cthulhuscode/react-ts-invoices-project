@@ -39,8 +39,11 @@ export const InvoiceForm = () => {
       dispatch(setCurrentInvoice(invoiceId));
     } else if (operation === "edit" && !editInvoice) {
       dispatch(resetCurrentInvoice());
+      dispatch(toggleForm({ show, operation: "create" }));
+    } else if (operation === "create" && editInvoice) {
+      dispatch(toggleForm({ show, operation: "edit" }));
     }
-  }, [pathname, show]);
+  }, [pathname, show, operation]);
 
   const currentInvoice = useAppSelector(
     (state) => state.invoices.currentInvoice
