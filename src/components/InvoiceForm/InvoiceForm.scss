@@ -126,16 +126,21 @@
     }
   }
 
-  &__error-msg {
-    color: colors.$red;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 10px;
-    line-height: 15px;
-    letter-spacing: -0.208333px;
-
+  &__error {
     margin-top: 32px;
     align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+
+    &-msg {
+      display: inline-block;
+      color: colors.$red;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: -0.208333px;
+    }
   }
 
   &__btns {
