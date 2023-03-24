@@ -1,7 +1,7 @@
 import "./InvoicePage.scss";
 import { images } from "../../constants/images";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toggleForm } from "../../redux";
 import { DeleteModal } from "../../components";
 import { useState } from "react";
@@ -29,6 +29,7 @@ export const InvoicePage = () => {
     itemList,
     id: invoiceId,
     status,
+    totalPrice,
   } = invoice;
 
   const handleEditClick = () => {
@@ -135,7 +136,7 @@ export const InvoicePage = () => {
             ))}
             <div className="InvoicePage__rows3__row">
               <p className="InvoicePage__amount">Amount Due</p>
-              <h3 className="InvoicePage__totalPrice">£ 556.00</h3>
+              <h3 className="InvoicePage__totalPrice">£ {totalPrice}</h3>
             </div>
           </div>
         </div>

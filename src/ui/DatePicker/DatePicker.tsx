@@ -89,7 +89,7 @@ export const DatePicker = ({
     const dateString = getDateStringFromTimestamp(timestamp);
     const friendlyDate = formatDate(timestamp);
     setFriendlyDate(friendlyDate);
-    onChangeDate({ timestamp, dateString, friendlyDate });
+    onChangeDate({ timestamp: timestamp.toString(), dateString, friendlyDate });
   };
 
   return (
