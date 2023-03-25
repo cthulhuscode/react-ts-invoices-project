@@ -38,7 +38,7 @@ export const InvoicePage = () => {
           </div>
           {/* fin de boton pendign */}
         </div>
-        <div className="InvoicePage__colum2">
+        <div className=" InvoicePage__btnTablet  ">
           <button className="InvoicePage__btnEdit">Edit</button>
           <button className="InvoicePage__btnDelete">Delete</button>
           <button className="InvoicePage__btnMask">Mark as Paid</button>
@@ -104,6 +104,12 @@ export const InvoicePage = () => {
             <h3 className="InvoicePage__totalPrice">£ 556.00</h3>
           </div>
         </div>
+      </div>
+
+      <div className="InvoicePage__btnMobil">
+        <button className="InvoicePage__btnEdit">Edit</button>
+        <button className="InvoicePage__btnDelete">Delete</button>
+        <button className="InvoicePage__btnMask">Mark as Paid</button>
       </div>
     </div>
   );

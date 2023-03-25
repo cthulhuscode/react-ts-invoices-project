@@ -11,10 +11,21 @@
     margin-right: 660px;
     text-decoration: none;
   }
+  &__enlace:hover {
+    color: #7e88c3;
+  }
 
   &__enlace img {
     transform: rotate(180deg);
     margin-right: 10px;
+  }
+  &__btnTablet {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  &__btnMobil {
+    display: none;
   }
 
   &__content {
@@ -213,7 +224,7 @@
     line-height: 15px;
     letter-spacing: -0.25px;
     color: #7e88c3;
-    padding: 12px 16px;
+    padding: 12px 23px;
     border: none;
   }
   &__btnEdit:hover {
@@ -279,10 +290,19 @@
 }
 @media screen and (max-width: 778px) {
   .InvoicePage {
-    transform: scale(0.9);
     &__enlace {
       margin-right: 590px;
       text-decoration: none;
+    }
+    &__content {
+      width: 688px;
+    }
+
+    &__content2 {
+      width: 688px;
+    }
+    &__rows3 {
+      margin-left: -10px;
     }
   }
 }
@@ -294,13 +314,29 @@
     flex-direction: column;
     gap: 18px;
     align-items: center;
-    transform: scale(1);
 
     margin: 24px 0px;
     &__enlace {
       margin-right: 250px;
       text-decoration: none;
     }
+
+    &__btnTablet {
+      display: none;
+    }
+    &__btnMobil {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      width: 100%;
+      padding: 21px 24px;
+
+      background: #ffffff;
+      box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+    }
+
     &__content {
       height: min-content;
       width: 327px;
@@ -324,7 +360,7 @@
     }
     &__colum2 {
       display: flex;
-      gap: 8px;
+      gap: 156px;
     }
     &__rows {
       display: flex;
@@ -335,7 +371,7 @@
     &__rows2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
+      gap: 0px;
       margin: 30px 0px;
 
       &__colum {
@@ -388,7 +424,7 @@
       grid-row: 2/3;
     }
     &__price {
-      margin-left: 20px;
+      margin-left: 25px;
       grid-column: 1/2;
       grid-row: 2/3;
     }
@@ -408,8 +444,13 @@
     &__enlace {
       color: #ffffff;
     }
-
+    &__enlace:hover {
+      color: #888eb0;
+    }
     &__content {
+      background: #1e2139;
+    }
+    &__btnMobil {
       background: #1e2139;
     }
 
