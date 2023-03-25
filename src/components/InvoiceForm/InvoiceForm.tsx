@@ -159,7 +159,10 @@ export const InvoiceForm = () => {
         className="iform-content"
         ref={ref}
       >
-        <div className="iform__back">
+        <div
+          className="iform__back"
+          onClick={() => dispatch(toggleForm(false))}
+        >
           <img src={images.leftArrow} alt="go back" />
           <span>Go back</span>
         </div>
