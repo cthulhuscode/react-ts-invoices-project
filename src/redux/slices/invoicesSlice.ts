@@ -19,6 +19,7 @@ interface InvoicesState {
     operation: "edit" | "create";
   };
   currentInvoice: Partial<Invoice>;
+  formHasErrors: boolean;
 }
 
 const initialInvoice: Partial<Invoice> = {
@@ -51,15 +52,15 @@ const initialInvoice: Partial<Invoice> = {
     friendlyDate: formatDate(new Date()),
   },
   projectDescription: "",
-  itemList: {
-    0: {
-      id: "0",
+  itemList: [
+    {
+      id: uuidv4(),
       name: "",
       amount: 0,
       price: 0,
       total: 0,
     },
-  },
+  ],
   totalPrice: 0,
 };
 
@@ -76,6 +77,7 @@ const initialState: InvoicesState = {
     operation: "create",
   },
   currentInvoice: initialInvoice,
+  formHasErrors: false,
 };
 
 export const invoicesSlice = createSlice({
@@ -125,6 +127,10 @@ export const invoicesSlice = createSlice({
       } else {
         state.form.show = !state.form.show;
       }
+      state.formHasErrors = false;
+    },
+    setFormHasErrors: (state, action: PayloadAction<boolean>) => {
+      state.formHasErrors = action.payload;
     },
     setCurrentInvoice: (state, action: PayloadAction<string>) => {
       const invoice = state.list.filter(
@@ -133,20 +139,9 @@ export const invoicesSlice = createSlice({
       state.currentInvoice = invoice;
     },
     resetCurrentInvoice: (state) => {
-      state.currentInvoice = initialInvoice;
+      state.currentInvoice = { ...initialInvoice };
     },
     editCurrentInvoice: (state, action: PayloadAction<Partial<Invoice>>) => {
-      let items:
-        | Record<string | number, InvoiceListItem>
-        | undefined
-        | InvoiceListItem[] = action.payload.itemList;
-
-      if (items !== undefined) {
-        items = Object.values(items);
-        const totalPrice = items.reduce((a, b) => a + b.total, 0);
-        action.payload.totalPrice = totalPrice;
-      }
-
       state.currentInvoice = action.payload;
     },
     addNewInvoiceListItem: (state) => {
@@ -162,17 +157,40 @@ export const invoicesSlice = createSlice({
           total: 0,
         };
 
-        state.currentInvoice.itemList = {
-          ...itemList,
-          [id]: item,
-        };
+        state.currentInvoice.itemList?.push(item);
       }
     },
     editInvoiceListItem: (state, action: PayloadAction<InvoiceListItem>) => {
-      const itemList = state.currentInvoice.itemList;
       const item = action.payload;
 
-      state.currentInvoice.itemList = { ...itemList, [item.id]: item };
+      let itemList = state.currentInvoice?.itemList;
+      if (itemList !== undefined) {
+        // Delete current item
+        state.currentInvoice.itemList = itemList.filter(
+          (i) => i.id !== item.id
+        );
+        // Add the modified item
+        state.currentInvoice.itemList?.push(item);
+      }
+
+      // Calculate total price
+      itemList = state.currentInvoice?.itemList;
+      if (itemList !== undefined) {
+        const totalPrice = itemList.reduce((a, b) => a + b.total, 0);
+        if (totalPrice !== null) state.currentInvoice.totalPrice = totalPrice;
+      }
+    },
+    removeInvoiceListItem: (state, action: PayloadAction<string>) => {
+      state.currentInvoice.itemList = state.currentInvoice.itemList?.filter(
+        (item) => item.id !== action.payload
+      );
+
+      // Calculate total price
+      const itemList = state.currentInvoice?.itemList;
+      if (itemList !== undefined) {
+        const totalPrice = itemList.reduce((a, b) => a + b.total, 0);
+        if (totalPrice !== null) state.currentInvoice.totalPrice = totalPrice;
+      }
     },
   },
 });
@@ -182,11 +200,13 @@ export const {
   editInvoice,
   deleteInvoice,
   toggleForm,
+  setFormHasErrors,
   setCurrentInvoice,
   resetCurrentInvoice,
   editCurrentInvoice,
   addNewInvoiceListItem,
   editInvoiceListItem,
+  removeInvoiceListItem,
 } = invoicesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

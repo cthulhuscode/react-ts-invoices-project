@@ -1,28 +1,28 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import type { ValidationError } from "zod-validation-error";
+import { fromZodError } from "zod-validation-error";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { useOnClickOutside, useDate } from "../../hooks";
+import type { PaymentTerms, CustomDate, Invoice } from "../../interfaces";
+import { Statuses } from "../../interfaces";
+import { ItemList } from "./ItemList/ItemList";
+import { DatePicker, InputText, Select } from "../../ui";
+import { images } from "../../constants";
 import {
   addInvoice,
   editCurrentInvoice,
   editInvoice,
   resetCurrentInvoice,
   setCurrentInvoice,
+  setFormHasErrors,
   toggleForm,
+  useAppDispatch,
+  useAppSelector,
 } from "../../redux";
-
-import type { PaymentTerms, CustomDate, Invoice } from "../../interfaces";
-
-import { Statuses } from "../../interfaces";
-
-import { ItemList } from "./ItemList/ItemList";
-import { DatePicker, InputText, Select } from "../../ui";
-
 import "./InvoiceForm.scss";
-import { images } from "../../constants";
-import { useDate } from "../../hooks/useDate";
-import { useLocation } from "react-router-dom";
+import { areInvoiceFormFieldsCorrect } from "../../utils";
 
 export const InvoiceForm = () => {
   const location = useLocation();
@@ -30,6 +30,7 @@ export const InvoiceForm = () => {
   const ref = useRef(null);
   const dispatch = useAppDispatch();
 
+  const formHasErrors = useAppSelector((state) => state.invoices.formHasErrors);
   const form = useAppSelector((state) => state.invoices.form);
   const { show, operation } = form;
 
@@ -40,15 +41,18 @@ export const InvoiceForm = () => {
       dispatch(setCurrentInvoice(invoiceId));
     } else if (operation === "edit" && !editInvoice) {
       dispatch(resetCurrentInvoice());
+      dispatch(toggleForm({ show, operation: "create" }));
+    } else if (operation === "create" && editInvoice) {
+      dispatch(toggleForm({ show, operation: "edit" }));
     }
-  }, [pathname, show]);
+  }, [pathname, show, operation]);
 
   const currentInvoice = useAppSelector(
     (state) => state.invoices.currentInvoice
   );
   const { billFrom, billTo, client, projectDescription, id } = currentInvoice;
 
-  const [formHasErrors, setFormHasErrors] = useState(false);
+  const [formErrors, setFormErrors] = useState<ValidationError>();
   const { getDateStringFromTimestamp, formatDate } = useDate();
 
   const handleDateChange = (date: CustomDate) => {
@@ -58,7 +62,9 @@ export const InvoiceForm = () => {
   const handlePaymentTermsChange = (paymentTerms: PaymentTerms) => {
     const calcDate = new Date();
 
-    const payDue = calcDate.setDate(calcDate.getDate() + paymentTerms.value);
+    const payDue = calcDate.setDate(
+      calcDate.getDate() + parseInt(paymentTerms.value)
+    );
     const paymentDue: CustomDate = {
       dateString: getDateStringFromTimestamp(new Date(payDue)),
       friendlyDate: formatDate(new Date(payDue)),
@@ -98,39 +104,43 @@ export const InvoiceForm = () => {
     dispatch(editCurrentInvoice(editingInvoice));
   };
 
-  const handleSaveClick = (status: Statuses | undefined) => {
+  const handleSaveClick = (status: Statuses) => {
+    console.log(status);
     dispatch(
       editCurrentInvoice({
         ...currentInvoice,
-        status: status !== undefined ? status : currentInvoice.status,
+        status,
       })
     );
 
+    const result = areInvoiceFormFieldsCorrect(currentInvoice);
+
+    // Save new invoice
+    if (
+      status === Statuses.draft ||
+      (result.success && operation === "create")
+    ) {
+      dispatch(addInvoice());
+      dispatch(resetCurrentInvoice());
+      dispatch(setFormHasErrors(false));
+      dispatch(toggleForm(false));
+    }
     // Save edited invoice
-    if (operation === "edit") {
+    else if (operation === "edit" && result.success) {
       dispatch(editInvoice(currentInvoice as Invoice));
       dispatch(resetCurrentInvoice());
+      dispatch(setFormHasErrors(false));
       dispatch(toggleForm(false));
-
-      // Save new invoice as draft
-    } else if (status === Statuses.draft) {
-      dispatch(addInvoice());
-      dispatch(resetCurrentInvoice());
-      dispatch(toggleForm(false));
-
-      // Save and send a new invoice
-    } else if (!formHasErrors && areFormFieldsFilled(currentInvoice)) {
-      dispatch(addInvoice());
-      dispatch(resetCurrentInvoice());
-      dispatch(toggleForm(false));
-
-      // Form has errors
-    } else {
-      console.log("The form has errors");
+    }
+    // Form has errors
+    else if (!result.success) {
+      dispatch(setFormHasErrors(true));
+      setFormErrors(fromZodError(result.error));
     }
   };
 
   const handleCancelClick = () => {
+    dispatch(setFormHasErrors(false));
     dispatch(resetCurrentInvoice());
     dispatch(toggleForm(false));
   };
@@ -165,7 +175,6 @@ export const InvoiceForm = () => {
         {/* Bill from */}
         <h4 className="iform__subtitle">Bill From</h4>
         <InputText
-          setInputHasError={setFormHasErrors}
           classes=""
           label="Street Address"
           name="from.street"
@@ -175,7 +184,6 @@ export const InvoiceForm = () => {
 
         <div className="iform__address-row iform__address-row--padding">
           <InputText
-            setInputHasError={setFormHasErrors}
             classes=""
             label="City"
             name="from.city"
@@ -184,7 +192,6 @@ export const InvoiceForm = () => {
           />
 
           <InputText
-            setInputHasError={setFormHasErrors}
             classes=""
             label="Post Code"
             name="from.postCode"
@@ -193,7 +200,6 @@ export const InvoiceForm = () => {
           />
 
           <InputText
-            setInputHasError={setFormHasErrors}
             classes=""
             label="Country"
             name="from.country"
@@ -205,7 +211,6 @@ export const InvoiceForm = () => {
         {/* Bill to */}
         <h4 className="iform__subtitle">Bill To</h4>
         <InputText
-          setInputHasError={setFormHasErrors}
           classes=""
           label="Client's Name"
           name="client.name"
@@ -214,7 +219,6 @@ export const InvoiceForm = () => {
         />
 
         <InputText
-          setInputHasError={setFormHasErrors}
           classes="mt-24"
           label="Client's Email"
           name="client.email"
@@ -223,7 +227,6 @@ export const InvoiceForm = () => {
         />
 
         <InputText
-          setInputHasError={setFormHasErrors}
           classes="mt-24"
           label="Street Address"
           name="to.street"
@@ -233,7 +236,6 @@ export const InvoiceForm = () => {
 
         <div className="iform__address-row iform__address-row--padding">
           <InputText
-            setInputHasError={setFormHasErrors}
             classes=""
             label="City"
             name="to.city"
@@ -242,7 +244,6 @@ export const InvoiceForm = () => {
           />
 
           <InputText
-            setInputHasError={setFormHasErrors}
             classes=""
             label="Post Code"
             name="to.postCode"
@@ -251,7 +252,6 @@ export const InvoiceForm = () => {
           />
 
           <InputText
-            setInputHasError={setFormHasErrors}
             classes=""
             label="Country"
             name="to.country"
@@ -274,7 +274,6 @@ export const InvoiceForm = () => {
         </div>
 
         <InputText
-          setInputHasError={setFormHasErrors}
           classes="mt-24"
           label="Project Description"
           name="projectDescription"
@@ -284,12 +283,16 @@ export const InvoiceForm = () => {
 
         {/* Item List */}
         <ItemList />
-        <span
-          className="iform__error-msg"
+        <div
+          className="iform__error"
           style={{ display: formHasErrors ? "unset" : "none" }}
         >
-          - All fields must be added
-        </span>
+          {formErrors?.message.split(";").map((error) => (
+            <span className="iform__error-msg" key={error}>
+              {error}
+            </span>
+          ))}
+        </div>
 
         <div className="iform__btns">
           <motion.button
@@ -342,28 +345,3 @@ export const InvoiceForm = () => {
     </div>
   );
 };
-
-function areFormFieldsFilled(invoice: Partial<Invoice>) {
-  if (
-    invoice.billFrom !== null &&
-    invoice.billFrom?.city !== "" &&
-    invoice.billFrom?.country !== "" &&
-    invoice.billFrom?.postCode !== "" &&
-    invoice.billFrom?.street !== "" &&
-    invoice.billTo !== null &&
-    invoice.billTo?.city !== "" &&
-    invoice.billTo?.country !== "" &&
-    invoice.billTo?.postCode !== "" &&
-    invoice.billTo?.street !== "" &&
-    invoice.client !== null &&
-    invoice.client?.name !== "" &&
-    invoice.client?.email !== "" &&
-    invoice.date !== null &&
-    invoice.itemList !== null &&
-    invoice.paymentTerms !== null &&
-    invoice.paymentDue !== null &&
-    invoice.projectDescription !== ""
-  )
-    return true;
-  else return false;
-}

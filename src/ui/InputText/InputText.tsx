@@ -1,6 +1,7 @@
-import { useState } from "react";
-import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import "./InputText.scss";
+import { useAppSelector } from "../../redux";
 
 interface InputTextProps {
   classes: string;
@@ -8,7 +9,6 @@ interface InputTextProps {
   value: string | undefined;
   name: string;
   setState: (target: EventTarget & HTMLInputElement) => void;
-  setInputHasError: Dispatch<SetStateAction<boolean>>;
 }
 
 export const InputText = ({
@@ -17,21 +17,24 @@ export const InputText = ({
   label,
   setState,
   value,
-  setInputHasError,
 }: InputTextProps) => {
+  const showForm = useAppSelector((state) => state.invoices.form.show);
+  const formHasErrors = useAppSelector((state) => state.invoices.formHasErrors);
+  const [error, setError] = useState(false);
+
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "") {
-      setInputHasError(true);
       setError(true);
     } else {
-      setInputHasError(false);
       setError(false);
     }
 
     setState(e.target);
   };
 
-  const [error, setError] = useState(false);
+  useEffect(() => {
+    if (value !== "" || !formHasErrors) setError(false);
+  }, [formHasErrors, showForm]);
 
   return (
     <div className={`inputT ${error ? "error" : ""} ${classes}`}>

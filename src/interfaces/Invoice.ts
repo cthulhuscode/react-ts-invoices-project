@@ -1,8 +1,8 @@
 export const paymentTerms = [
-  { desc: "Net 1 Day", value: 1 },
-  { desc: "Net 7 Days", value: 7 },
-  { desc: "Net 14 Days", value: 14 },
-  { desc: "Net 30 Days", value: 30 },
+  { desc: "Net 1 Day", value: "1" },
+  { desc: "Net 7 Days", value: "7" },
+  { desc: "Net 14 Days", value: "14" },
+  { desc: "Net 30 Days", value: "30" },
 ] as const;
 
 export type PaymentTerms = (typeof paymentTerms)[number];
@@ -47,6 +47,6 @@ export interface Invoice {
   paymentTerms: PaymentTerms;
   paymentDue: CustomDate;
   projectDescription: string;
-  itemList: Record<string | number, InvoiceListItem>;
+  itemList: InvoiceListItem[];
   totalPrice: number;
 }
