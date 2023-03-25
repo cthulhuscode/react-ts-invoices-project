@@ -2,15 +2,18 @@ import "./InvoicePage.scss";
 import { images } from "../../constants/images";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { toggleForm } from "../../redux";
+import { changeInvoiceStatus, setFormHasErrors, toggleForm } from "../../redux";
 import { DeleteModal } from "../../components";
 import { useState } from "react";
+import { Statuses } from "../../interfaces";
+import { areInvoiceFormFieldsCorrect } from "../../utils";
 // import type { Invoice } from "../../interfaces";
 
 export const InvoicePage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
+  const formInvoice = useAppSelector((state) => state.invoices.currentInvoice);
   const invoice = useAppSelector(
     (state) => state.invoices.list?.filter((invoice) => invoice.id === id)[0]
   );
@@ -39,6 +42,12 @@ export const InvoicePage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleDeleteClick = () => {
     setShowDeleteModal(true);
+  };
+
+  const handleMarkAsPaid = () => {
+    if (id !== undefined && areInvoiceFormFieldsCorrect(formInvoice).success)
+      dispatch(changeInvoiceStatus({ id, status: Statuses.paid }));
+    else dispatch(setFormHasErrors(true));
   };
 
   return (
@@ -72,7 +81,9 @@ export const InvoicePage = () => {
             >
               Delete
             </button>
-            <button className="InvoicePage__btnMask">Mark as Paid</button>
+            <button className="InvoicePage__btnMask" onClick={handleMarkAsPaid}>
+              Mark as Paid
+            </button>
           </div>
         </div>
 
