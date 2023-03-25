@@ -1,16 +1,52 @@
 import { motion } from "framer-motion";
+import type { FormEvent } from "react";
 
 import { images } from "../../../../constants";
+import { useAppDispatch } from "../../../../redux/hooks";
 import type { InvoiceListItem } from "../../../../interfaces";
+import { editInvoiceListItem, removeInvoiceListItem } from "../../../../redux";
 import "./ListItem.scss";
 
 interface ListItemProps {
   item: InvoiceListItem;
-  showLabel: boolean;
 }
 
-export const ListItem = ({ item, showLabel }: ListItemProps) => {
-  const { name, amount, price, total } = item;
+export const ListItem = ({ item }: ListItemProps) => {
+  const dispatch = useAppDispatch();
+  const { id, name, amount, price, total } = item;
+
+  const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    let editingItem = { ...item };
+    let total = 0;
+    const value = !isNaN(parseFloat(target.value))
+      ? parseFloat(target.value)
+      : 0;
+
+    if (target.name === "price") {
+      total = value * amount;
+
+      editingItem = {
+        ...item,
+        [target.name]: parseFloat(target.value),
+        total: total >= 0 ? total : 0,
+      };
+    } else if (target.name === "amount") {
+      total = value * price;
+
+      editingItem = {
+        ...item,
+        [target.name]: parseInt(target.value),
+        total: total >= 0 ? total : 0,
+      };
+    } else
+      editingItem = {
+        ...item,
+        [target.name]: target.value,
+      };
+
+    dispatch(editInvoiceListItem(editingItem));
+  };
 
   return (
     <div className="fl-item">
@@ -20,9 +56,9 @@ export const ListItem = ({ item, showLabel }: ListItemProps) => {
           value={name}
           className="fl-item__input"
           type="text"
-          name="itemName"
-          id="itemName"
-          readOnly={true}
+          name="name"
+          id="name"
+          onChange={handleInputChange}
         />
       </div>
 
@@ -30,28 +66,27 @@ export const ListItem = ({ item, showLabel }: ListItemProps) => {
         <span className="fl-item__label">Qty.</span>
 
         <input
-          value={amount}
+          value={amount.toString()}
           className="fl-item__input fl-item__input-qty"
           type="number"
-          name="itemQty"
-          id="itemQty"
-          min={1}
+          name="amount"
+          id="amount"
           placeholder="1"
-          readOnly={true}
+          min={1}
+          onChange={handleInputChange}
         />
       </div>
 
       <div className="fl-item__cell">
         <span className="fl-item__label">Price</span>
         <input
-          value={price}
+          value={price.toString()}
           className="fl-item__input fl-item__input-price"
           type="number"
-          name="itemPrice"
-          id="itemPrice"
+          name="price"
+          id="price"
           placeholder="0.00"
-          min={1}
-          readOnly={true}
+          onChange={handleInputChange}
         />
       </div>
 
@@ -65,7 +100,10 @@ export const ListItem = ({ item, showLabel }: ListItemProps) => {
 
       <div className="fl-item__cell">
         <div className="fl-item__remove-empty"></div>
-        <div className="fl-item__remove">
+        <div
+          className="fl-item__remove"
+          onClick={() => dispatch(removeInvoiceListItem(id))}
+        >
           <motion.img
             src={images.remove}
             alt="remove item"

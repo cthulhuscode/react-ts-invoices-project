@@ -1,0 +1,132 @@
+@use "./../../styles/_colors.scss" as colors;
+
+.dmodal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  // min-width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    max-width: 480px;
+    width: 100%;
+    max-height: 249px;
+    height: 100%;
+
+    padding: 48px;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+    border-radius: 8px;
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 32px;
+    /* identical to box height, or 133% */
+
+    letter-spacing: -0.5px;
+
+    color: colors.$black-darkest;
+  }
+
+  &__info {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.25px;
+    color: colors.$gray-dark;
+  }
+
+  &__btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  &__btn {
+    width: 90px;
+    height: 48px;
+    border-radius: 24px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &--cancel {
+      background: #f9fafe;
+      color: colors.$gray-blue;
+
+      &:hover {
+        background: #eaebf1;
+      }
+    }
+
+    &--delete {
+      color: #fff;
+      background-color: colors.$red;
+
+      &:hover {
+        background-color: #ec4545;
+      }
+    }
+  }
+
+  &__blur {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    z-index: -1;
+
+    background-color: #000;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+.App.dark {
+  .dmodal {
+    &__body {
+      background: colors.$blue-darkest;
+      box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+    }
+    &__title {
+      color: #fff;
+    }
+    &__info {
+      color: colors.$gray-light;
+    }
+
+    &__btn {
+      &--cancel {
+        background-color: colors.$blue-darker;
+        color: colors.$gray-light;
+
+        &:hover {
+          background-color: #161931;
+        }
+      }
+    }
+  }
+}

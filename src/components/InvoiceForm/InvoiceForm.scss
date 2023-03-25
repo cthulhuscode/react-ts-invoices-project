@@ -3,17 +3,24 @@
 .iform {
   max-width: 632px;
   width: 632px;
-  height: 100%;
 
   position: absolute;
   z-index: 1;
-  left: -16px;
+  /*sidenavbar width - hiding 16px of form*/
+  left: calc(103px - 16px);
   top: 0;
   bottom: 0;
 
   border-radius: 0px 20px 20px 0px;
 
   &-content {
+    /* Hide scrollbar */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
     width: 100%;
     height: 100%;
     z-index: 1;
@@ -24,7 +31,7 @@
     flex-direction: column;
     align-items: center;
 
-    /* 72px because of left: 16px */
+    /* 72px because of left: -16px */
     padding: 56px 56px 32px 72px;
     overflow-y: scroll;
 
@@ -32,7 +39,7 @@
       padding-left: 56px;
     }
 
-    @media screen and (max-width: 632px) {
+    @media screen and (max-width: 680px) {
       width: 100%;
       padding: 24px;
       padding-bottom: 32px;
@@ -74,6 +81,10 @@
     line-height: 32px;
     letter-spacing: -0.5px;
     color: colors.$black-darkest;
+
+    span {
+      color: colors.$gray-dark;
+    }
   }
 
   &__subtitle {
@@ -97,6 +108,39 @@
     &--padding {
       padding-top: 24px;
     }
+    @media screen and (max-width: 632px) {
+      flex-wrap: wrap;
+      & > div {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+  }
+
+  &__address-row-controls {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+    @media screen and (max-width: 480px) {
+      flex-wrap: wrap;
+    }
+  }
+
+  &__error {
+    margin-top: 32px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+
+    &-msg {
+      display: inline-block;
+      color: colors.$red;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: -0.208333px;
+    }
   }
 
   &__btns {
@@ -111,7 +155,7 @@
       gap: 8px;
     }
 
-    @media screen and (max-width: 632px) {
+    @media screen and (max-width: 680px) {
       position: fixed;
       bottom: 0;
       height: 80px;
@@ -169,32 +213,40 @@
   }
 
   &-blur {
-    width: calc(100vw - 87px);
-    height: 100%;
-
-    position: absolute;
+    position: fixed;
     z-index: 0;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
 
+    // width: calc(100vw - 104px);
+    width: 100%;
+    height: 100%;
+
     background: #000000;
     mix-blend-mode: normal;
     opacity: 0.5;
     cursor: pointer;
 
-    @media screen and (max-width: 900px) {
-      width: 100vw;
+    // @media screen and (max-width: 900px) {
+    //   width: calc(100vw - 16.6px);
+    // }
+
+    @media screen and (max-width: 680px) {
+      display: none;
     }
   }
 
   @media screen and (max-width: 900px) {
-    left: 0;
+    top: 80px;
+    left: 0px;
   }
 
-  @media screen and (max-width: 632px) {
+  @media screen and (max-width: 680px) {
+    max-width: unset;
     width: 100%;
+    padding-bottom: 70px;
   }
 }
 
@@ -218,6 +270,14 @@
 
     &__title {
       color: #fff;
+    }
+
+    &__btns {
+      @media screen and (max-width: 680px) {
+        background: colors.$blue-darkest;
+        box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+        border: none;
+      }
     }
 
     &-btn {

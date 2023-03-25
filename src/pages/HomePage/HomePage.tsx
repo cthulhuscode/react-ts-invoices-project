@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import { InvoiceForm, InvoicesList } from "../../components";
+import { InvoicesList } from "../../components";
 import { images } from "../../constants";
 import { StatusFilter } from "../../ui";
 import "./HomePage.scss";
-import { useAppDispatch } from "../../hooks/redux";
-import { toggleForm } from "../../redux";
+import { useAppDispatch } from "../../redux/hooks";
+import { toggleForm, useAppSelector } from "../../redux";
+import { Statuses } from "../../interfaces";
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
+  const invoicesCount = useAppSelector(
+    (state) =>
+      state.invoices.list.filter(
+        (invoice) => invoice.status === Statuses.pending
+      ).length
+  );
 
   const [windowWidth, setWindowWith] = useState(window.innerWidth);
 
@@ -32,8 +39,8 @@ export const HomePage = () => {
           <h1 className="header__title">Invoices</h1>
           <p className="header__subtitle">
             {windowWidth < 570
-              ? `${5} invoices`
-              : `There are ${5} pending invoices`}
+              ? `${invoicesCount} invoices`
+              : `There are ${invoicesCount} pending invoices`}
           </p>
         </div>
 
@@ -41,7 +48,9 @@ export const HomePage = () => {
           <StatusFilter windowWidth={windowWidth} />
 
           <motion.button
-            onClick={() => dispatch(toggleForm())}
+            onClick={() =>
+              dispatch(toggleForm({ show: true, operation: "create" }))
+            }
             className="header__btn"
             whileTap={{ scale: 0.95 }}
           >
@@ -59,8 +68,6 @@ export const HomePage = () => {
       </div>
 
       <InvoicesList />
-
-      <InvoiceForm />
     </div>
   );
 };
