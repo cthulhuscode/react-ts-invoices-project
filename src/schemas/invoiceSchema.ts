@@ -65,6 +65,6 @@ export const invoiceSchema = z.object({
   }),
   paymentDue: customDateSchema,
   projectDescription,
-  itemList: z.array(invoiceListItemSchema),
+  itemList: z.array(invoiceListItemSchema).min(1),
   totalPrice: price,
 });
