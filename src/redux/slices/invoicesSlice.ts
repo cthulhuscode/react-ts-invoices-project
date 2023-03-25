@@ -19,6 +19,7 @@ interface InvoicesState {
     operation: "edit" | "create";
   };
   currentInvoice: Partial<Invoice>;
+  formHasErrors: boolean;
 }
 
 const initialInvoice: Partial<Invoice> = {
@@ -76,6 +77,7 @@ const initialState: InvoicesState = {
     operation: "create",
   },
   currentInvoice: initialInvoice,
+  formHasErrors: false,
 };
 
 export const invoicesSlice = createSlice({
@@ -125,6 +127,10 @@ export const invoicesSlice = createSlice({
       } else {
         state.form.show = !state.form.show;
       }
+      state.formHasErrors = false;
+    },
+    setFormHasErrors: (state, action: PayloadAction<boolean>) => {
+      state.formHasErrors = action.payload;
     },
     setCurrentInvoice: (state, action: PayloadAction<string>) => {
       const invoice = state.list.filter(
@@ -194,6 +200,7 @@ export const {
   editInvoice,
   deleteInvoice,
   toggleForm,
+  setFormHasErrors,
   setCurrentInvoice,
   resetCurrentInvoice,
   editCurrentInvoice,

@@ -16,6 +16,7 @@ import {
   editInvoice,
   resetCurrentInvoice,
   setCurrentInvoice,
+  setFormHasErrors,
   toggleForm,
   useAppDispatch,
   useAppSelector,
@@ -29,6 +30,7 @@ export const InvoiceForm = () => {
   const ref = useRef(null);
   const dispatch = useAppDispatch();
 
+  const formHasErrors = useAppSelector((state) => state.invoices.formHasErrors);
   const form = useAppSelector((state) => state.invoices.form);
   const { show, operation } = form;
 
@@ -50,7 +52,6 @@ export const InvoiceForm = () => {
   );
   const { billFrom, billTo, client, projectDescription, id } = currentInvoice;
 
-  const [formHasErrors, setFormHasErrors] = useState(false);
   const [formErrors, setFormErrors] = useState<ValidationError>();
   const { getDateStringFromTimestamp, formatDate } = useDate();
 
@@ -103,45 +104,43 @@ export const InvoiceForm = () => {
     dispatch(editCurrentInvoice(editingInvoice));
   };
 
-  const handleSaveClick = (status: Statuses | null) => {
+  const handleSaveClick = (status: Statuses) => {
+    console.log(status);
     dispatch(
       editCurrentInvoice({
         ...currentInvoice,
-        status: status !== null ? status : currentInvoice.status,
+        status,
       })
     );
 
     const result = areInvoiceFormFieldsCorrect(currentInvoice);
 
-    // Save new invoice as draft
-    if (status === Statuses.draft) {
+    // Save new invoice
+    if (
+      status === Statuses.draft ||
+      (result.success && operation === "create")
+    ) {
       dispatch(addInvoice());
       dispatch(resetCurrentInvoice());
+      dispatch(setFormHasErrors(false));
       dispatch(toggleForm(false));
     }
     // Save edited invoice
     else if (operation === "edit" && result.success) {
       dispatch(editInvoice(currentInvoice as Invoice));
       dispatch(resetCurrentInvoice());
-      dispatch(toggleForm(false));
-    }
-    // Save and send a new invoice
-    else if (result.success) {
-      setFormHasErrors(false);
-      dispatch(addInvoice());
-      dispatch(resetCurrentInvoice());
+      dispatch(setFormHasErrors(false));
       dispatch(toggleForm(false));
     }
     // Form has errors
-    else {
-      if (!result.success) {
-        setFormHasErrors(true);
-        setFormErrors(fromZodError(result.error));
-      }
+    else if (!result.success) {
+      dispatch(setFormHasErrors(true));
+      setFormErrors(fromZodError(result.error));
     }
   };
 
   const handleCancelClick = () => {
+    dispatch(setFormHasErrors(false));
     dispatch(resetCurrentInvoice());
     dispatch(toggleForm(false));
   };
@@ -312,8 +311,7 @@ export const InvoiceForm = () => {
               className="iform-btn iform-btn__draft"
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                if (operation === "edit") handleSaveClick(null);
-                else handleSaveClick(Statuses.draft);
+                handleSaveClick(Statuses.draft);
               }}
             >
               Save as Draft
