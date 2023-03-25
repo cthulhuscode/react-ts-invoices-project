@@ -8,16 +8,26 @@
   justify-content: center;
 
   &__body {
+    width: min-content;
+
     display: flex;
     flex-direction: column;
     gap: 24px;
     align-items: center;
     margin: 64px 0px 24px 0;
-  }
+  } 
 
   &__enlace {
-    margin-right: 660px;
+    color: #0c0e16;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    color: #0c0e16;
     text-decoration: none;
+
+    align-self: flex-start;
   }
 
   &__enlace img {
@@ -300,17 +310,11 @@
     &__body {
       transform: scale(0.9);
     }
-    &__enlace {
-      margin-right: 590px;
-      text-decoration: none;
-    }
   }
 }
 @media screen and (max-width: 678px) {
   .InvoicePage {
     &__body {
-      max-width: 1200px;
-      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 18px;
@@ -320,10 +324,6 @@
       margin-top: 112px;
     }
 
-    &__enlace {
-      margin-right: 250px;
-      text-decoration: none;
-    }
     &__content {
       height: min-content;
       width: 327px;
