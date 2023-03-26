@@ -159,6 +159,13 @@ export const invoicesSlice = createSlice({
         if (totalPrice !== null) state.currentInvoice.totalPrice = totalPrice;
       }
     },
+    selectStatus: (
+      state,
+      action: PayloadAction<{ key: string; value: boolean }>
+    ) => {
+      const { key, value } = action.payload;
+      state.selectedStatuses[key as Statuses] = value;
+    },
   },
 });
 
@@ -175,6 +182,7 @@ export const {
   addNewInvoiceListItem,
   editInvoiceListItem,
   removeInvoiceListItem,
+  selectStatus,
 } = invoicesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

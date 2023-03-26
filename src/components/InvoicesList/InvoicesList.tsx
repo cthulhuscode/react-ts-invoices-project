@@ -5,7 +5,20 @@ import { images } from "../../constants";
 import { Link } from "react-router-dom";
 
 export const InvoicesList = () => {
-  const invoices = useAppSelector((state) => state.invoices.list);
+  const filterOptions = useAppSelector((state) =>
+    Object.entries(state.invoices.selectedStatuses)
+      .filter((status) => status[1])
+      .map((status) => status[0])
+  );
+
+  const invoices = useAppSelector((state) => {
+    const invoices = state.invoices.list;
+    if (filterOptions.length > 0)
+      return invoices.filter((invoice) =>
+        filterOptions.includes(invoice.status)
+      );
+    return invoices;
+  });
 
   return (
     <div className="InvoicesList">
@@ -32,6 +45,10 @@ export const InvoicesList = () => {
       {invoices.length <= 0 && (
         <div className="InvoicesList__zero-invoices">
           <img src={images.zeroInvoices} />
+          <h3>There is nothing here</h3>
+          <p>
+            Create an invoice by clicking the New Invoice button and get started
+          </p>
         </div>
       )}
     </div>
