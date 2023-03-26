@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
@@ -192,5 +192,33 @@ export const getInvoiceItemsList = (state: RootState) => {
   if (itemList !== undefined) return Object.entries(itemList);
   else return null;
 };
+
+/**
+ * SELECTORS
+ */
+export const getSelectedStatuses = createSelector(
+  (state: RootState) => state.invoices.selectedStatuses,
+  (invoices) => {
+    return Object.entries(invoices)
+      .filter((status) => status[1])
+      .map((status) => status[0]);
+  }
+);
+
+export const getFilteredInvoices = createSelector(
+  [
+    (state: RootState) => state.invoices.list,
+    (state, filterOptions) => filterOptions,
+  ],
+  (invoices, filterOptions) => {
+    console.log("entré");
+    if (filterOptions.length > 0)
+      return invoices.filter((invoice) =>
+        filterOptions.includes(invoice.status)
+      );
+
+    return invoices;
+  }
+);
 
 export default invoicesSlice.reducer;

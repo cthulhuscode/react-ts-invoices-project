@@ -3,28 +3,21 @@ import { InvoicesListItem } from "../InvoicesListItem/InvoicesListItem";
 import { useAppSelector } from "../../redux/hooks";
 import { images } from "../../constants";
 import { Link } from "react-router-dom";
+import { getFilteredInvoices, getSelectedStatuses } from "../../redux";
+import { shallowEqual } from "react-redux";
 
 export const InvoicesList = () => {
-  const filterOptions = useAppSelector((state) =>
-    Object.entries(state.invoices.selectedStatuses)
-      .filter((status) => status[1])
-      .map((status) => status[0])
+  const filterOptions = useAppSelector(getSelectedStatuses, shallowEqual);
+  const filteredInvoices = useAppSelector(
+    (state) => getFilteredInvoices(state, filterOptions),
+    shallowEqual
   );
-
-  const invoices = useAppSelector((state) => {
-    const invoices = state.invoices.list;
-    if (filterOptions.length > 0)
-      return invoices.filter((invoice) =>
-        filterOptions.includes(invoice.status)
-      );
-    return invoices;
-  });
 
   return (
     <div className="InvoicesList">
       <div className="InvoicesList__list">
-        {invoices.length > 0 &&
-          invoices.map((item, index) => (
+        {filteredInvoices.length > 0 &&
+          filteredInvoices.map((item, index) => (
             <Link
               className="InvoicesList__link"
               key={item.id}
@@ -42,7 +35,7 @@ export const InvoicesList = () => {
           ))}
       </div>
 
-      {invoices.length <= 0 && (
+      {filteredInvoices.length <= 0 && (
         <div className="InvoicesList__zero-invoices">
           <img src={images.zeroInvoices} />
           <h3>There is nothing here</h3>
