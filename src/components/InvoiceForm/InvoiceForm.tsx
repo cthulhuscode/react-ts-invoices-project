@@ -60,11 +60,14 @@ export const InvoiceForm = () => {
   };
 
   const handlePaymentTermsChange = (paymentTerms: PaymentTerms) => {
-    const calcDate = new Date();
-
-    const payDue = calcDate.setDate(
-      calcDate.getDate() + parseInt(paymentTerms.value)
+    const date = new Date(
+      currentInvoice.date?.timestamp !== undefined
+        ? parseInt(currentInvoice.date?.timestamp)
+        : ""
     );
+
+    const payDue = date.setDate(date.getDate() + parseInt(paymentTerms.value));
+
     const paymentDue: CustomDate = {
       dateString: getDateStringFromTimestamp(new Date(payDue)),
       friendlyDate: formatDate(new Date(payDue)),

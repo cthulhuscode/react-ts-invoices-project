@@ -5,6 +5,7 @@ import { images } from "../../constants";
 import { useDate } from "../../hooks/useDate";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import type { CustomDate } from "../../interfaces";
+import { useAppSelector } from "../../redux";
 import "./DatePicker.scss";
 
 interface DatePickerProps {
@@ -18,6 +19,13 @@ export const DatePicker = ({
   label,
   classes,
 }: DatePickerProps) => {
+  const formOperation = useAppSelector(
+    (state) => state.invoices.form.operation
+  );
+  const invoiceDate = useAppSelector(
+    (state) => state.invoices.currentInvoice.date
+  );
+
   const {
     formatDate,
     year,
@@ -28,16 +36,16 @@ export const DatePicker = ({
     isCurrentDay,
     getDateStringFromTimestamp,
   } = useDate();
-  const [friendlyDate, setFriendlyDate] = useState(() =>
-    formatDate(new Date())
-  );
   const ref = useRef(null);
 
   const [details, setDetails] = useState({
     showDatePicker: false,
     year,
     month,
-    selectedDay: todayTimestamp,
+    selectedDay:
+      invoiceDate !== undefined
+        ? parseInt(invoiceDate.timestamp)
+        : todayTimestamp,
     monthDetails: getMonthDetails(year, month),
   });
 
@@ -67,13 +75,17 @@ export const DatePicker = ({
   };
 
   const isSelectedDay = (day: any) => {
-    return day.timestamp === details.selectedDay;
+    return parseInt(day.timestamp) === details.selectedDay;
   };
 
   const showDatePicker = () => {
     setDetails({
       ...details,
       showDatePicker: !details.showDatePicker,
+      selectedDay:
+        invoiceDate !== undefined
+          ? parseInt(invoiceDate.timestamp)
+          : todayTimestamp,
     });
   };
 
@@ -88,7 +100,6 @@ export const DatePicker = ({
 
     const dateString = getDateStringFromTimestamp(timestamp);
     const friendlyDate = formatDate(timestamp);
-    setFriendlyDate(friendlyDate);
     onChangeDate({ timestamp: timestamp.toString(), dateString, friendlyDate });
   };
 
@@ -96,14 +107,12 @@ export const DatePicker = ({
     <div className={`datepicker dp ${classes}`} ref={ref}>
       <label className="dp__label">{label}</label>
 
-      <div
-        ref={ref}
-        className="dp__date"
-        onClick={() => {
-          showDatePicker();
-        }}
-      >
-        <span className="dp__date-text">{friendlyDate}</span>
+      <div ref={ref} className="dp__date" onClick={showDatePicker}>
+        <span className="dp__date-text">
+          {formOperation === "edit"
+            ? invoiceDate?.friendlyDate
+            : formatDate(new Date())}
+        </span>
         <div className="dp__date-icon">
           <img src={images.calendar} alt="" />
         </div>
