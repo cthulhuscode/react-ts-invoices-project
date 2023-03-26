@@ -1,12 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { paymentTerms, Statuses } from "../../interfaces";
-import type { Invoice, InvoiceListItem } from "../../interfaces";
-import { useDate } from "../../hooks/useDate";
 
-const { getDateStringFromTimestamp, formatDate } = useDate();
+import type { Statuses, Invoice, InvoiceListItem } from "../../interfaces";
+
+import { generateInitialInvoice } from "../../utils";
 
 // Define a type for the slice state
 interface InvoicesState {
@@ -22,48 +21,6 @@ interface InvoicesState {
   formHasErrors: boolean;
 }
 
-const initialInvoice: Partial<Invoice> = {
-  status: Statuses.draft,
-  billFrom: {
-    street: "",
-    city: "",
-    postCode: "",
-    country: "",
-  },
-  billTo: {
-    street: "",
-    city: "",
-    postCode: "",
-    country: "",
-  },
-  client: {
-    name: "",
-    email: "",
-  },
-  date: {
-    timestamp: new Date().toISOString(),
-    dateString: getDateStringFromTimestamp(new Date()),
-    friendlyDate: formatDate(new Date()),
-  },
-  paymentTerms: paymentTerms[0],
-  paymentDue: {
-    timestamp: new Date().toISOString(),
-    dateString: getDateStringFromTimestamp(new Date()),
-    friendlyDate: formatDate(new Date()),
-  },
-  projectDescription: "",
-  itemList: [
-    {
-      id: uuidv4(),
-      name: "",
-      amount: 0,
-      price: 0,
-      total: 0,
-    },
-  ],
-  totalPrice: 0,
-};
-
 // Define the initial state using that type
 const initialState: InvoicesState = {
   list: [],
@@ -76,7 +33,7 @@ const initialState: InvoicesState = {
     show: true,
     operation: "create",
   },
-  currentInvoice: initialInvoice,
+  currentInvoice: generateInitialInvoice(),
   formHasErrors: false,
 };
 
@@ -86,15 +43,11 @@ export const invoicesSlice = createSlice({
   reducers: {
     addInvoice: (state, action: PayloadAction<Invoice | undefined>) => {
       if (action.payload !== undefined) {
-        const newInvoice = { ...action.payload, id: uuidv4() };
-        state.list?.push(newInvoice);
+        state.list?.push(action.payload);
       } else {
-        state.currentInvoice.id = uuidv4();
         if (state.list !== null)
           state.list = [...state.list, state.currentInvoice as Invoice];
         else state.list = [state.currentInvoice as Invoice];
-
-        state.currentInvoice = initialInvoice;
       }
     },
     editInvoice: (state, action: PayloadAction<Invoice>) => {
@@ -112,6 +65,20 @@ export const invoicesSlice = createSlice({
         state.list = state.list.filter(
           (invoice) => invoice.id !== action.payload
         );
+      }
+    },
+    changeInvoiceStatus: (
+      state,
+      action: PayloadAction<{ id: string; status: Statuses }>
+    ) => {
+      const { id, status } = action.payload;
+
+      if (state.list !== null) {
+        const invoiceIndex = state.list.findIndex(
+          (invoice) => invoice.id === id
+        );
+
+        state.list[invoiceIndex].status = status;
       }
     },
     toggleForm: (
@@ -139,10 +106,10 @@ export const invoicesSlice = createSlice({
       state.currentInvoice = invoice;
     },
     resetCurrentInvoice: (state) => {
-      state.currentInvoice = { ...initialInvoice };
+      state.currentInvoice = generateInitialInvoice();
     },
     editCurrentInvoice: (state, action: PayloadAction<Partial<Invoice>>) => {
-      state.currentInvoice = action.payload;
+      state.currentInvoice = { ...action.payload };
     },
     addNewInvoiceListItem: (state) => {
       const itemList = state.currentInvoice.itemList;
@@ -192,6 +159,13 @@ export const invoicesSlice = createSlice({
         if (totalPrice !== null) state.currentInvoice.totalPrice = totalPrice;
       }
     },
+    selectStatus: (
+      state,
+      action: PayloadAction<{ key: string; value: boolean }>
+    ) => {
+      const { key, value } = action.payload;
+      state.selectedStatuses[key as Statuses] = value;
+    },
   },
 });
 
@@ -199,6 +173,7 @@ export const {
   addInvoice,
   editInvoice,
   deleteInvoice,
+  changeInvoiceStatus,
   toggleForm,
   setFormHasErrors,
   setCurrentInvoice,
@@ -207,6 +182,7 @@ export const {
   addNewInvoiceListItem,
   editInvoiceListItem,
   removeInvoiceListItem,
+  selectStatus,
 } = invoicesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
@@ -216,5 +192,27 @@ export const getInvoiceItemsList = (state: RootState) => {
   if (itemList !== undefined) return Object.entries(itemList);
   else return null;
 };
+
+/**
+ * SELECTORS
+ */
+export const getSelectedStatuses = createSelector(
+  (state: RootState) => state.invoices.selectedStatuses,
+  (invoices) =>
+    Object.entries(invoices)
+      .filter((status) => status[1])
+      .map((status) => status[0])
+);
+
+export const getFilteredInvoices = createSelector(
+  [
+    (state: RootState) => state.invoices.list,
+    (state, filterOptions) => filterOptions,
+  ],
+  (invoices, filterOptions) =>
+    filterOptions.length > 0
+      ? invoices.filter((invoice) => filterOptions.includes(invoice.status))
+      : invoices
+);
 
 export default invoicesSlice.reducer;

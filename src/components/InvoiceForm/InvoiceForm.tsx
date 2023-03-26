@@ -60,11 +60,14 @@ export const InvoiceForm = () => {
   };
 
   const handlePaymentTermsChange = (paymentTerms: PaymentTerms) => {
-    const calcDate = new Date();
-
-    const payDue = calcDate.setDate(
-      calcDate.getDate() + parseInt(paymentTerms.value)
+    const date = new Date(
+      currentInvoice.date?.timestamp !== undefined
+        ? parseInt(currentInvoice.date?.timestamp)
+        : ""
     );
+
+    const payDue = date.setDate(date.getDate() + parseInt(paymentTerms.value));
+
     const paymentDue: CustomDate = {
       dateString: getDateStringFromTimestamp(new Date(payDue)),
       friendlyDate: formatDate(new Date(payDue)),
@@ -100,34 +103,34 @@ export const InvoiceForm = () => {
       editingInvoice = { ...currentInvoice, [name[0]]: target.value };
     }
 
-    // _setInvoice(editingInvoice);
     dispatch(editCurrentInvoice(editingInvoice));
   };
 
-  const handleSaveClick = (status: Statuses) => {
-    console.log(status);
-    dispatch(
-      editCurrentInvoice({
-        ...currentInvoice,
-        status,
-      })
-    );
+  const handleSaveClick = (status: Statuses | null) => {
+    const saveInvoice = {
+      ...currentInvoice,
+      status: status !== null ? status : currentInvoice.status,
+    };
 
     const result = areInvoiceFormFieldsCorrect(currentInvoice);
 
-    // Save new invoice
-    if (
-      status === Statuses.draft ||
-      (result.success && operation === "create")
-    ) {
-      dispatch(addInvoice());
+    // Save edited invoice
+    if (operation === "edit" && result.success) {
+      if (currentInvoice.status === Statuses.draft) {
+        saveInvoice.status = Statuses.pending;
+      }
+
+      dispatch(editInvoice(saveInvoice as Invoice));
       dispatch(resetCurrentInvoice());
       dispatch(setFormHasErrors(false));
       dispatch(toggleForm(false));
     }
-    // Save edited invoice
-    else if (operation === "edit" && result.success) {
-      dispatch(editInvoice(currentInvoice as Invoice));
+    // Save new invoice
+    else if (
+      status === Statuses.draft ||
+      (result.success && operation === "create")
+    ) {
+      dispatch(addInvoice(saveInvoice as Invoice));
       dispatch(resetCurrentInvoice());
       dispatch(setFormHasErrors(false));
       dispatch(toggleForm(false));
@@ -151,15 +154,11 @@ export const InvoiceForm = () => {
 
   return (
     <div className="iform" style={{ display: show ? "flex" : "none" }}>
-      <motion.div
-        initial={{ x: -632 }}
-        whileInView={{ x: 0 }}
-        exit={{ x: -632 }}
-        transition={{ duration: 0.65, ease: "easeInOut" }}
-        className="iform-content"
-        ref={ref}
-      >
-        <div className="iform__back">
+      <motion.div className="iform-content" ref={ref}>
+        <div
+          className="iform__back"
+          onClick={() => dispatch(toggleForm(false))}
+        >
           <img src={images.leftArrow} alt="go back" />
           <span>Go back</span>
         </div>
@@ -332,7 +331,7 @@ export const InvoiceForm = () => {
               className="iform-btn iform-btn__save"
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                handleSaveClick(Statuses.pending);
+                handleSaveClick(null);
               }}
             >
               {operation === "edit" ? "Save changes" : "Save & Send"}

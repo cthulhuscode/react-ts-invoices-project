@@ -7,6 +7,7 @@ import { paymentTerms } from "../../interfaces";
 
 import "./Select.scss";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { useAppSelector } from "../../redux";
 
 interface SelectProps {
   label: string;
@@ -15,14 +16,23 @@ interface SelectProps {
 
 export const Select = ({ label, setSelectedOption }: SelectProps) => {
   const ref = useRef(null);
-  const [showOptions, setShowOptions] = useState(false);
-  const [_selectedOption, _setSelectedOption] = useState<PaymentTerms>(
-    paymentTerms[0]
+  const paymentTerm = useAppSelector(
+    (state) => state.invoices.currentInvoice.paymentTerms
   );
+  const [showOptions, setShowOptions] = useState(false);
 
   useOnClickOutside(ref, () => {
     setShowOptions(false);
   });
+
+  const handleSelectedOptionChange = (pTerm: PaymentTerms) => {
+    const payTerm = {
+      desc: pTerm.desc,
+      value: pTerm.value,
+    };
+
+    setSelectedOption(payTerm as PaymentTerms);
+  };
 
   return (
     <div
@@ -38,7 +48,9 @@ export const Select = ({ label, setSelectedOption }: SelectProps) => {
       </label>
 
       <div className="select__control">
-        <span className="select__selected">{_selectedOption.desc}</span>
+        <span className="select__selected">
+          {paymentTerm !== null ? paymentTerm?.desc : paymentTerms[0].desc}
+        </span>
         <motion.img
           className="select__img"
           src={images.rightArrow}
@@ -59,13 +71,7 @@ export const Select = ({ label, setSelectedOption }: SelectProps) => {
             key={pTerm.value}
             value={pTerm.desc}
             onClick={() => {
-              const payTerm = {
-                desc: pTerm.desc,
-                value: pTerm.value,
-              };
-
-              setSelectedOption(payTerm as PaymentTerms);
-              _setSelectedOption(payTerm as PaymentTerms);
+              handleSelectedOptionChange(pTerm);
             }}
           >
             {pTerm.desc}
