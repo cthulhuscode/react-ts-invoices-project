@@ -198,11 +198,10 @@ export const getInvoiceItemsList = (state: RootState) => {
  */
 export const getSelectedStatuses = createSelector(
   (state: RootState) => state.invoices.selectedStatuses,
-  (invoices) => {
-    return Object.entries(invoices)
+  (invoices) =>
+    Object.entries(invoices)
       .filter((status) => status[1])
-      .map((status) => status[0]);
-  }
+      .map((status) => status[0])
 );
 
 export const getFilteredInvoices = createSelector(
@@ -210,15 +209,10 @@ export const getFilteredInvoices = createSelector(
     (state: RootState) => state.invoices.list,
     (state, filterOptions) => filterOptions,
   ],
-  (invoices, filterOptions) => {
-    console.log("entré");
-    if (filterOptions.length > 0)
-      return invoices.filter((invoice) =>
-        filterOptions.includes(invoice.status)
-      );
-
-    return invoices;
-  }
+  (invoices, filterOptions) =>
+    filterOptions.length > 0
+      ? invoices.filter((invoice) => filterOptions.includes(invoice.status))
+      : invoices
 );
 
 export default invoicesSlice.reducer;
