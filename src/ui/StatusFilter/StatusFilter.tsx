@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 import { images } from "../../constants";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import "./StatusFilter.scss";
+import { selectStatus, useAppDispatch, useAppSelector } from "../../redux";
 
 interface StatusFilterProps {
   windowWidth: number;
@@ -11,22 +12,19 @@ interface StatusFilterProps {
 
 export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
   const ref = useRef(null);
+  const dispatch = useAppDispatch();
+  const filterOptions = useAppSelector(
+    (state) => state.invoices.selectedStatuses
+  );
   const [showOptions, setShowOptions] = useState(false);
-  const [filterOptions, setFilterOptions] = useState({
-    draft: false,
-    pending: false,
-    paid: true,
-  });
 
   const handleShowOptionsClick = () => {
     setShowOptions((prevState) => !prevState);
   };
 
   const handleCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
-    setFilterOptions({ ...filterOptions, [e.target.id]: e.target.checked });
+    dispatch(selectStatus({ key: e.target.name, value: e.target.checked }));
   };
-
-  useMemo(() => handleCheckboxClick, [filterOptions]);
 
   useOnClickOutside(ref, () => {
     setShowOptions(false);
@@ -58,11 +56,12 @@ export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
             <input
               className="options-list__item-control"
               type="checkbox"
-              name="draft"
-              id="draft"
+              name="Draft"
+              id="Draft"
               onChange={handleCheckboxClick}
+              checked={filterOptions.Draft}
             />
-            <label className="options-list__item-text" htmlFor="draft">
+            <label className="options-list__item-text" htmlFor="Draft">
               Draft
             </label>
           </li>
@@ -70,11 +69,12 @@ export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
             <input
               className="options-list__item-control"
               type="checkbox"
-              name="pending"
-              id="pending"
+              name="Pending"
+              id="Pending"
               onChange={handleCheckboxClick}
+              checked={filterOptions.Pending}
             />
-            <label className="options-list__item-text" htmlFor="pending">
+            <label className="options-list__item-text" htmlFor="Pending">
               Pending
             </label>
           </li>
@@ -82,10 +82,10 @@ export const StatusFilter = ({ windowWidth }: StatusFilterProps) => {
             <input
               className="options-list__item-control"
               type="checkbox"
-              name="paid"
-              id="paid"
+              name="Paid"
+              id="Paid"
               onChange={handleCheckboxClick}
-              checked={filterOptions.paid}
+              checked={filterOptions.Paid}
             />
             <label className="options-list__item-text" htmlFor="Paid">
               Paid
