@@ -15,7 +15,7 @@
     gap: 24px;
     align-items: center;
     margin: 64px 0px 24px 0;
-  } 
+  }
 
   &__enlace {
     color: #0c0e16;
@@ -30,9 +30,21 @@
     align-self: flex-start;
   }
 
+  &__enlace:hover {
+    color: #7e88c3;
+  }
+
   &__enlace img {
     transform: rotate(180deg);
     margin-right: 10px;
+  }
+  &__btnTablet {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  &__btnMobil {
+    display: none;
   }
 
   &__content {
@@ -231,7 +243,7 @@
     line-height: 15px;
     letter-spacing: -0.25px;
     color: #7e88c3;
-    padding: 12px 16px;
+    padding: 12px 23px;
     border: none;
   }
   &__btnEdit:hover {
@@ -320,7 +332,7 @@
       gap: 18px;
       align-items: center;
       transform: scale(1);
-
+      margin-bottom: 100px;
       margin-top: 112px;
     }
 
@@ -347,7 +359,8 @@
     }
     &__colum2 {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 140px;
     }
     &__rows {
       display: flex;
@@ -422,6 +435,24 @@
     &__rows5 {
       display: none;
     }
+
+    &__btnTablet {
+      display: none;
+    }
+    &__btnMobil {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 0;
+      gap: 8px;
+
+      width: 100%;
+      padding: 21px 24px;
+
+      background: #ffffff;
+      box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+    }
   }
 }
 
@@ -431,7 +462,15 @@
       color: #ffffff;
     }
 
+    &__enlace:hover {
+      color: #888eb0;
+    }
+
     &__content {
+      background: #1e2139;
+    }
+
+    &__btnMobil {
       background: #1e2139;
     }
 
