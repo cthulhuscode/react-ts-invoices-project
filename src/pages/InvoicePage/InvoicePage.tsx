@@ -71,7 +71,7 @@ export const InvoicePage = () => {
             </div>
             {/* fin de boton pendign */}
           </div>
-          <div className="InvoicePage__colum2">
+          <div className="InvoicePage__btnTablet">
             <button className="InvoicePage__btnEdit" onClick={handleEditClick}>
               Edit
             </button>
@@ -158,6 +158,15 @@ export const InvoicePage = () => {
         setShowModal={setShowDeleteModal}
         itemId={invoiceId !== null ? invoiceId : ""}
       />
+      <div className="InvoicePage__btnMobil">
+        <button className="InvoicePage__btnEdit" onClick={handleEditClick}>
+          Edit
+        </button>
+        <button className="InvoicePage__btnDelete" onClick={handleDeleteClick}>
+          Delete
+        </button>
+        <button className="InvoicePage__btnMask">Mark as Paid</button>
+      </div>
     </div>
   );
 };
