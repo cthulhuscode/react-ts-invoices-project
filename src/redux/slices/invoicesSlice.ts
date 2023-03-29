@@ -30,7 +30,7 @@ const initialState: InvoicesState = {
     Draft: false,
   },
   form: {
-    show: true,
+    show: false,
     operation: "create",
   },
   currentInvoice: generateInitialInvoice(),
