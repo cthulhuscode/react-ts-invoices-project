@@ -19,9 +19,6 @@ export const DatePicker = ({
   label,
   classes,
 }: DatePickerProps) => {
-  const formOperation = useAppSelector(
-    (state) => state.invoices.form.operation
-  );
   const invoiceDate = useAppSelector(
     (state) => state.invoices.currentInvoice.date
   );
@@ -100,6 +97,7 @@ export const DatePicker = ({
 
     const dateString = getDateStringFromTimestamp(timestamp);
     const friendlyDate = formatDate(timestamp);
+
     onChangeDate({ timestamp: timestamp.toString(), dateString, friendlyDate });
   };
 
@@ -109,7 +107,7 @@ export const DatePicker = ({
 
       <div ref={ref} className="dp__date" onClick={showDatePicker}>
         <span className="dp__date-text">
-          {formOperation === "edit"
+          {invoiceDate?.friendlyDate !== null
             ? invoiceDate?.friendlyDate
             : formatDate(new Date())}
         </span>
