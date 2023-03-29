@@ -56,7 +56,25 @@ export const InvoiceForm = () => {
   const { getDateStringFromTimestamp, formatDate } = useDate();
 
   const handleDateChange = (date: CustomDate) => {
-    dispatch(editCurrentInvoice({ ...currentInvoice, date }));
+    // Update payment due date
+    if (currentInvoice.paymentTerms?.value !== undefined) {
+      const pDate = new Date(parseInt(date.timestamp));
+
+      const payDue = pDate.setDate(
+        pDate.getDate() + parseInt(currentInvoice.paymentTerms.value)
+      );
+
+      const paymentDue: CustomDate = {
+        dateString: getDateStringFromTimestamp(new Date(payDue)),
+        friendlyDate: formatDate(new Date(payDue)),
+        timestamp: new Date(payDue).toISOString(),
+      };
+
+      return dispatch(
+        editCurrentInvoice({ ...currentInvoice, paymentDue, date })
+      );
+    }
+    return dispatch(editCurrentInvoice({ ...currentInvoice, date }));
   };
 
   const handlePaymentTermsChange = (paymentTerms: PaymentTerms) => {
